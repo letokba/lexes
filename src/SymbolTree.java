@@ -4,7 +4,6 @@
  */
 public class SymbolTree {
     private TreeNode root;
-    private TreeNode subRoot;
 
     private static class TreeNode {
         Symbol flag;
@@ -21,12 +20,18 @@ public class SymbolTree {
 
         public void setLeftChild(TreeNode leftChild) {
             this.leftChild = leftChild;
+            if(leftChild == null) {
+                return;
+            }
             leftChild.prent = this;
         }
 
 
         public void setRightChild(TreeNode rightChild) {
             this.rightChild = rightChild;
+            if(rightChild == null) {
+                return;
+            }
             rightChild.prent = this;
         }
 
@@ -38,63 +43,38 @@ public class SymbolTree {
 
     private SymbolTree() { }
 
-    private void initialize() {
-        root = new TreeNode(new Symbol(Token.lBracket, null));
-        subRoot = root;
-    }
+
 
     static public SymbolTree builder(SymbolQueue queue) {
         SymbolTree tree = new SymbolTree();
-        tree.build(queue);
+        tree.root = tree.build(queue);
         return tree;
     }
 
-    private void build(SymbolQueue queue) {
-        initialize();
-
+    private TreeNode build(SymbolQueue queue) {
+        TreeNode root = new TreeNode(queue.poll());
         while (queue.size() > 0) {
             Symbol symbol = queue.poll();
             TreeNode node = new TreeNode(symbol);
-
-
-
-
-            if(symbol.isRightBracket()) {
-                //回到 '('
-                subRoot = subRoot.prent;
-                // '(' 的右节点一定是 ')'
-                subRoot.setRightChild(node);
-                // 回到对应的左括号的前一个运算符位置
-                subRoot = subRoot.prent;
-            }
-
             if(symbol.isOperation()) {
-                if(symbol.lowTo(subRoot.flag)) {
-                    node.setLeftChild(subRoot.rightChild);
-                    subRoot.setRightChild(node);
+                if(symbol.lowTo(root.flag)) {
+                    node.setLeftChild(root.rightChild);
+                    root.setRightChild(node);
                 }else {
-                    TreeNode parent = subRoot.prent;
-                    subRoot.prent = null;
-                    node.setLeftChild(subRoot);
-                    parent.setLeftChild(node);
-                    subRoot = node;
+                    node.setLeftChild(root);
+                    root = node;
                 }
-            }
-
-            if(symbol.isNum() || symbol.isLeftBracket()) {
-                if(subRoot.flag.isLeftBracket()) {
-                    subRoot.setLeftChild(node);
-                    subRoot = node;
-                } else if(subRoot.flag.isOperation()) {
-                    TreeNode t = this.subRoot;
-                    while (t.rightChild != null) {
-                        t = t.rightChild;
-                    }
-                    t.setRightChild(node);
+            }else if(symbol.isNum()) {
+                TreeNode t = root;
+                while (t.rightChild != null) {
+                    t = t.rightChild;
                 }
+                t.setRightChild(node);
+            }else {
+                break;
             }
         }
-        this.root.setRightChild(new TreeNode(new Symbol(Token.rBracket, null)));
+        return root;
     }
 
     public double decode() {
