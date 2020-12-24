@@ -73,7 +73,11 @@ public class SymbolTree {
                     root.setLeftChild(node);
                 } else {
                     // operation
-                    root.setRightChild(node);
+                    if (root.rightChild != null) {
+                        root.rightChild.setRightChild(node);
+                    } else {
+                        root.setRightChild(node);
+                    }
                 }
                 root = node;
             }
@@ -105,7 +109,11 @@ public class SymbolTree {
                         root = node;
                     }
                 } else {
-                    parent.setLeftChild(node);
+                    if(parent.leftChild == root) {
+                        parent.setLeftChild(node);
+                    }else {
+                        parent.setRightChild(node);
+                    }
                     node.setLeftChild(root);
                     root = node;
                 }

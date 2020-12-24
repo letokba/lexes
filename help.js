@@ -20,12 +20,13 @@ fp.open('samples.txt', 'r+', function (err, fd) {
             .forEach(value => {
                 try {
                     let eval = global.eval(value);
-                    console.log(`${value}  = ${eval}`)
+                    // console.log(`${value}  = ${eval}`)
+                    console.log(`${eval}`)
                 }catch (e) {
                     console.error(value);
                 }
             });
     });
-    console.log("open success");
+    // console.log("open success");
 })
 
