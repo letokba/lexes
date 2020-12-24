@@ -68,38 +68,40 @@ public class SymbolTree {
             Symbol symbol = queue.poll();
             Symbol rootSymbol = root.flag;
             TreeNode node = new TreeNode(symbol);
-            if (symbol.isLeftBracket()) {
-                if (rootSymbol.isLeftBracket()) {
-                    root.setLeftChild(node);
-                } else {
-                    // operation
-                    if (root.rightChild != null) {
-                        root.rightChild.setRightChild(node);
-                    } else {
-                        root.setRightChild(node);
-                    }
-                }
-                root = node;
+
+            if (symbol.isRightBracket()) {
+                root = root.parent;
+                root.setRightChild(node);
+                continue;
             }
 
-            if (symbol.isNum()) {
+            if (symbol.isLeftBracket() || symbol.isNum()) {
+                // we think the "(...)" is same with number
+                // only one, the "(" must be the root to transmit the next symbol (number or "(" )
+                // but number is mostly the rightChild unless not that it is the first by expression
                 if (rootSymbol.isLeftBracket()) {
                     root.setLeftChild(node);
                     root = node;
                 } else {
-                    // operation
                     if (root.rightChild != null) {
                         root.rightChild.setRightChild(node);
                     } else {
                         root.setRightChild(node);
                     }
+                    if (symbol.isLeftBracket()) {
+                        root = node;
+                    }
                 }
+                continue;
             }
-
             if (symbol.isOperation()) {
                 TreeNode parent = root.parent;
 
                 if (rootSymbol.isOperation()) {
+                    // like root is "+", node is "*"
+                    // node should exchange root's rightChild not root
+                    // become "*" and "/” must executing before "+" or "-"
+                    // After building, the calculating order is down to up.
                     if (symbol.lowTo(rootSymbol)) {
                         node.setLeftChild(root.rightChild);
                         root.setRightChild(node);
@@ -109,9 +111,9 @@ public class SymbolTree {
                         root = node;
                     }
                 } else {
-                    if(parent.leftChild == root) {
+                    if (parent.leftChild == root) {
                         parent.setLeftChild(node);
-                    }else {
+                    } else {
                         parent.setRightChild(node);
                     }
                     node.setLeftChild(root);
@@ -120,13 +122,6 @@ public class SymbolTree {
 
             }
 
-            if (symbol.isRightBracket()) {
-                if (root.parent == null) {
-                    throw new RuntimeException("表达式错误");
-                }
-                root = root.parent;
-                root.setRightChild(node);
-            }
         }
         return p.leftChild;
     }
