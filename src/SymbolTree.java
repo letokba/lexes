@@ -51,10 +51,36 @@ public class SymbolTree {
         return tree;
     }
 
+
     private TreeNode build(SymbolQueue queue) {
-        TreeNode root = new TreeNode(queue.poll());
-        while (queue.size() > 0) {
+        TreeNode p = new TreeNode(new Symbol(Token.lBracket, null));
+        TreeNode root = p;
+        while (! queue.isEmpty()) {
             Symbol symbol = queue.poll();
+            TreeNode node  = new TreeNode(symbol);
+            if(symbol.isLeftBracket()) {
+                root.setLeftChild(node);
+                root = node;
+            }else if (symbol.isRightBracket()) {
+                root.setRightChild(node);
+                root = root.prent;
+            }else {
+                TreeNode t  = subBuild(symbol, queue);
+                if(root.leftChild != null) {
+                    t.setLeftChild(root.leftChild);
+                }
+                root.setLeftChild(t);
+            }
+        }
+        return p.leftChild;
+
+    }
+
+
+    private TreeNode subBuild(Symbol numSymbol, SymbolQueue queue) {
+        TreeNode root = new TreeNode(numSymbol);
+        while (queue.size() > 0) {
+            Symbol symbol = queue.peek();
             TreeNode node = new TreeNode(symbol);
             if(symbol.isOperation()) {
                 if(symbol.lowTo(root.flag)) {
@@ -73,6 +99,7 @@ public class SymbolTree {
             }else {
                 break;
             }
+            queue.poll();
         }
         return root;
     }

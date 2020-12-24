@@ -6,7 +6,7 @@ public class Main {
 
 
     public static void main(String[] args) {
-        String expression = "2 - 3 * 2 + 3 / 2";
+        String expression = "(2 - 3) * (2 + 2)";
         double ans = Translator.computeExpression(expression);
         System.out.println(ans);
     }
