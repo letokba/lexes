@@ -7,7 +7,7 @@
     <groupId>org.letokba</groupId>
     <artifactId>lexe</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
 
     <properties>

@@ -2,6 +2,9 @@
 
 a simple Four Operations Expression Analyzer.
 
+
+![](assets/2020-12-24-17-09-18.gif)
+
 ## 测试样本
 
 ```text
