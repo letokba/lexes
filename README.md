@@ -3,7 +3,6 @@
 a simple Four Operations Expression Analyzer.
 
 
-![](assets/2020-12-24-17-09-18.gif)
 
 ## 测试样本
 
@@ -73,3 +72,5 @@ a simple Four Operations Expression Analyzer.
 ## 获取结果
 
 最后，符号数的根节点的值即为文本表达式的运算结果。
+
+![](assets/2020-12-24-17-09-18.gif)
