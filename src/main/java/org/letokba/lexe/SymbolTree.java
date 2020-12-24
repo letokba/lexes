@@ -1,3 +1,5 @@
+package org.letokba.lexe;
+
 /**
  * @author Wait
  * @date 2020/12/23

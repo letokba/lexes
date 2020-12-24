@@ -1,3 +1,5 @@
+package org.letokba.lexe;
+
 import java.util.AbstractQueue;
 import java.util.Iterator;
 import java.util.LinkedList;

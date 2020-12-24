@@ -1,9 +1,13 @@
+package org.letokba.lexe;
+
+
+
 /**
  * @author Wait
  * @date 2020/12/23
  */
 public class Translator {
-    static Analyzer analyzer = new Analyzer();
+    final static Analyzer analyzer = new Analyzer();
 
     public static double computeExpression(String expression) {
         SymbolQueue queue = analyzer.analyzed(expression);
