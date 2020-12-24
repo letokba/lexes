@@ -6,7 +6,7 @@ package org.letokba.lexe;
 public class Analyzer {
 
     public SymbolQueue analyzed(String expression) {
-        expression = clearBlank(expression);
+        expression = StringUtils.clearBlank(expression);
         SymbolQueue queue = new SymbolQueue();
         int i = unsafeAnalyzed(expression, queue);
         if(i < expression.length()) {
@@ -15,16 +15,7 @@ public class Analyzer {
         return queue;
     }
 
-    public String clearBlank(String s) {
-        StringBuilder builder = new StringBuilder();
-        for (char c : s.toCharArray()) {
-            if(Character.isWhitespace(c)){
-               continue;
-            }
-            builder.append(c);
-        }
-        return builder.toString();
-    }
+
 
     private int unsafeAnalyzed(String expression, SymbolQueue queue){
         int i = 0;
