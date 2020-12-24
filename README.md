@@ -43,12 +43,15 @@ a simple Four Operations Expression Analyzer.
 
 1. 初始化树，根节点默认为 “(", 记为 Root
 2. 设置一个 p 节点记录根节点
-3. 依次从队列中取出符号，生成节点，记为$e_i$
-    1. 如果 $e_i$ 为Number
+3. 依次从队列中取出符号，生成节点，记为ei
+    1. 如果 ei 为Number 或 左括号，存在两种情况。
 
-    - 若，Root为左括号，将$e_i$作为Root的右节点，将Root移动到$e_i$
-    - 反之，将$e_i$设为右节点（若Root的右节点非空，不断向右查找）
+    - 若 Root 为左括号，将ei作为Root的右节点
+    - 反之，将ei设为右节点（若Root的右节点非空，不断向右查找其右节点）
+    - 例外，默认，是将Root 传递到 ei，但如果 ei 为 Number，但 Root也不为左括号，不应该这样做。
 
-   2.如果 $e_i$ 为左括号
-
-    - 
+   2.如果 ei 为 运算符时
+   
+    - 若 Root 也为运算符，但ei的优先级高于 Root，则将Root作为ei的左孩子，且ei取代Root的位置；反之，将ei取代Root的右节点，将原右节点移动到ei的左节点上，
+   
+    - 反之，取代Root在树中的位置，并将Root子树转移到ei的左节点上

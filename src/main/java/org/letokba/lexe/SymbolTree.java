@@ -96,20 +96,13 @@ public class SymbolTree {
             }
             if (symbol.isOperation()) {
                 TreeNode parent = root.parent;
-
-                if (rootSymbol.isOperation()) {
-                    // like root is "+", node is "*"
-                    // node should exchange root's rightChild not root
-                    // become "*" and "/” must executing before "+" or "-"
-                    // After building, the calculating order is down to up.
-                    if (symbol.lowTo(rootSymbol)) {
-                        node.setLeftChild(root.rightChild);
-                        root.setRightChild(node);
-                    } else {
-                        parent.setLeftChild(node);
-                        node.setLeftChild(root);
-                        root = node;
-                    }
+                // like root is "+", node is "*"
+                // node should exchange root's rightChild not root
+                // become "*" and "/” must executing before "+" or "-"
+                // After building, the calculating order is down to up.
+                if (rootSymbol.isOperation() && symbol.lowTo(rootSymbol)) {
+                    node.setLeftChild(root.rightChild);
+                    root.setRightChild(node);
                 } else {
                     if (parent.leftChild == root) {
                         parent.setLeftChild(node);
@@ -119,9 +112,7 @@ public class SymbolTree {
                     node.setLeftChild(root);
                     root = node;
                 }
-
             }
-
         }
         return p.leftChild;
     }
