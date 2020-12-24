@@ -36,4 +36,4 @@ a simple Four Operations Expression Analyzer.
 
 ### 生成队列
 
-![生成队列]("assets/created-symbols-queue.png")
+![生成队列](assets/created-symbols-queue.png)
