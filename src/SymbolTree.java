@@ -9,30 +9,31 @@ public class SymbolTree {
         Symbol flag;
         TreeNode leftChild;
         TreeNode rightChild;
-        TreeNode prent;
+        TreeNode parent;
+
         public TreeNode(Symbol symbol) {
             this.flag = symbol;
         }
 
-        public void setPrent(TreeNode prent) {
-            this.prent = prent;
+        public void setParent(TreeNode parent) {
+            this.parent = parent;
         }
 
         public void setLeftChild(TreeNode leftChild) {
             this.leftChild = leftChild;
-            if(leftChild == null) {
+            if (leftChild == null) {
                 return;
             }
-            leftChild.prent = this;
+            leftChild.parent = this;
         }
 
 
         public void setRightChild(TreeNode rightChild) {
             this.rightChild = rightChild;
-            if(rightChild == null) {
+            if (rightChild == null) {
                 return;
             }
-            rightChild.prent = this;
+            rightChild.parent = this;
         }
 
         @Override
@@ -41,8 +42,8 @@ public class SymbolTree {
         }
     }
 
-    private SymbolTree() { }
-
+    private SymbolTree() {
+    }
 
 
     static public SymbolTree builder(SymbolQueue queue) {
@@ -53,55 +54,71 @@ public class SymbolTree {
 
 
     private TreeNode build(SymbolQueue queue) {
-        TreeNode p = new TreeNode(new Symbol(Token.lBracket, null));
-        TreeNode root = p;
-        while (! queue.isEmpty()) {
-            Symbol symbol = queue.poll();
-            TreeNode node  = new TreeNode(symbol);
-            if(symbol.isLeftBracket()) {
-                root.setLeftChild(node);
-                root = node;
-            }else if (symbol.isRightBracket()) {
-                root.setRightChild(node);
-                root = root.prent;
-            }else {
-                TreeNode t  = subBuild(symbol, queue);
-                if(root.leftChild != null) {
-                    t.setLeftChild(root.leftChild);
-                }
-                root.setLeftChild(t);
-            }
-        }
-        return p.leftChild;
+        return subBuild(queue);
 
     }
 
 
-    private TreeNode subBuild(Symbol numSymbol, SymbolQueue queue) {
-        TreeNode root = new TreeNode(numSymbol);
+    private TreeNode subBuild(SymbolQueue queue) {
+        TreeNode root = new TreeNode(new Symbol(Token.lBracket, 0));
+        TreeNode p = root;
         while (queue.size() > 0) {
-            Symbol symbol = queue.peek();
+            Symbol symbol = queue.poll();
+            Symbol rootSymbol = root.flag;
             TreeNode node = new TreeNode(symbol);
-            if(symbol.isOperation()) {
-                if(symbol.lowTo(root.flag)) {
-                    node.setLeftChild(root.rightChild);
+            if (symbol.isLeftBracket()) {
+                if (rootSymbol.isLeftBracket()) {
+                    root.setLeftChild(node);
+                } else {
+                    // operation
                     root.setRightChild(node);
-                }else {
+                }
+                root = node;
+            }
+
+            if (symbol.isNum()) {
+                if (rootSymbol.isLeftBracket()) {
+                    root.setLeftChild(node);
+                    root = node;
+                } else {
+                    // operation
+                    if (root.rightChild != null) {
+                        root.rightChild.setRightChild(node);
+                    } else {
+                        root.setRightChild(node);
+                    }
+                }
+            }
+
+            if (symbol.isOperation()) {
+                TreeNode parent = root.parent;
+
+                if (rootSymbol.isOperation()) {
+                    if (symbol.lowTo(rootSymbol)) {
+                        node.setLeftChild(root.rightChild);
+                        root.setRightChild(node);
+                    } else {
+                        parent.setLeftChild(node);
+                        node.setLeftChild(root);
+                        root = node;
+                    }
+                } else {
+                    parent.setLeftChild(node);
                     node.setLeftChild(root);
                     root = node;
                 }
-            }else if(symbol.isNum()) {
-                TreeNode t = root;
-                while (t.rightChild != null) {
-                    t = t.rightChild;
-                }
-                t.setRightChild(node);
-            }else {
-                break;
+
             }
-            queue.poll();
+
+            if (symbol.isRightBracket()) {
+                if (root.parent == null) {
+                    throw new RuntimeException("表达式错误");
+                }
+                root = root.parent;
+                root.setRightChild(node);
+            }
         }
-        return root;
+        return p.leftChild;
     }
 
     public double decode() {
@@ -111,34 +128,38 @@ public class SymbolTree {
 
 
     public void postOrder(TreeNode p) {
-        if(p == null || (p.leftChild == null && p.rightChild == null)) {
+        if (p == null || (p.leftChild == null && p.rightChild == null)) {
             return;
         }
 
         postOrder(p.leftChild);
         postOrder(p.rightChild);
 
-        if(p.flag.isOperation()) {
+        if (p.flag.isOperation()) {
             double a = (double) p.leftChild.flag.getData();
             double b = (double) p.rightChild.flag.getData();
             double ans = operated(a, b, p.flag.getToken());
             p.flag = new Symbol(Token.num, ans);
         }
 
-        if(p.flag.isLeftBracket()) {
+        if (p.flag.isLeftBracket()) {
             p.flag = p.leftChild.flag;
         }
     }
 
 
-
     public double operated(double a, double b, Token token) {
         switch (token) {
-            case add: return a + b;
-            case sub: return a - b;
-            case mul: return a * b;
-            case dev: return a / b;
-            default: throw new RuntimeException("token is not support");
+            case add:
+                return a + b;
+            case sub:
+                return a - b;
+            case mul:
+                return a * b;
+            case dev:
+                return a / b;
+            default:
+                throw new RuntimeException("token is not support");
         }
     }
 
