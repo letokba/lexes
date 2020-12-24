@@ -2,7 +2,7 @@
 
 a simple Four Operations Expression Analyzer.
 
-## Test Samples
+## 测试样本
 ```text
     "1 + 2",                            // 3
     "2 + 3 * 2",                        // 8
@@ -16,7 +16,7 @@ a simple Four Operations Expression Analyzer.
 
 ```
 
-## Test Result
+## 测试结果
 
 ```text
 
@@ -31,3 +31,9 @@ a simple Four Operations Expression Analyzer.
     3 + (2 + 3) * 3 = 18.0
 
 ```
+
+## 基本思路
+
+### 生成队列
+
+![生成队列]("assets/created-symbols-queue.png")
