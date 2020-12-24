@@ -25,20 +25,17 @@ public class Analyzer {
             int j = tryMatchNumber(array, i);
             Object data;
             Token token;
-            try{
-                if(j == i) {
-                    token = transformToken(array[j]);
-                    data = array[j];
-                    i++;
-                }else {
-                    token = Token.num;
-                    data = Double.parseDouble(expression.substring(i, j));
-                    i = j;
-                }
-                queue.add(new Symbol(token, data));
-            }catch (NumberFormatException e) {
-                return i;
+            if(j == i) {
+                token = transformToken(array[j]);
+                data = array[j];
+                i++;
+            }else {
+                token = Token.num;
+                data = Double.parseDouble(expression.substring(i, j));
+                i = j;
             }
+            queue.add(new Symbol(token, data));
+
         }
         return i;
     }
@@ -53,6 +50,8 @@ public class Analyzer {
             else if(array[j] == '.' && isDigit) {
                 j++;
                 isDigit = false;
+            }else if(! isOperationalToken(array[j])) {
+                throw new IllegalArgumentException("illegal symbol: " + array[j]);
             }else {
                 break;
             }
@@ -68,7 +67,7 @@ public class Analyzer {
 
 
     public boolean isOperationalToken(char c) {
-        return c == '+' || c == '-' || c == '*' || c == '/';
+        return c == '+' || c == '-' || c == '*' || c == '/' || c == '(' || c == ')';
     }
 
 
