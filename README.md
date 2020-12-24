@@ -12,6 +12,8 @@ a simple Four Operations Expression Analyzer.
     "(2 - 1) + (3 + 1)",                // 5
     "(2.5 - 0.5) * 2",                  // 4
     "((3.0 + 2) * 2) + 0 + (2 * 3)"     // 16
+    "3 + (2 + 3) * 3"                   // 18
+
 ```
 
 ## Test Result
@@ -26,5 +28,6 @@ a simple Four Operations Expression Analyzer.
     (2 - 1) + (3 + 1) = 5.0
     (2.5 - 0.5) * 2 = 4.0
     ((3.0 + 2) * 2) + 0 + (2 * 3) = 16.0
+    3 + (2 + 3) * 3 = 18.0
 
 ```
