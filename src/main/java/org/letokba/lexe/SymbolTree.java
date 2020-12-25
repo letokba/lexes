@@ -100,11 +100,7 @@ public class SymbolTree {
                     node.setLeftChild(root.rightChild);
                     root.setRightChild(node);
                 } else {
-                    if (parent.leftChild == root) {
-                        parent.setLeftChild(node);
-                    } else {
-                        parent.setRightChild(node);
-                    }
+                    parent.setRightChild(node);
                     node.setLeftChild(root);
                     root = node;
                 }
