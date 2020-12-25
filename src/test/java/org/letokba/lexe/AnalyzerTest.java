@@ -9,7 +9,7 @@ public class AnalyzerTest {
 
     @Test
     public void analyzed() {
-        String sample = "_";
+        String sample = "1 + 2_";
         SymbolQueue queue = analyzer.analyzed(sample);
         queue.forEach(System.out::println);
     }

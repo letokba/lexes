@@ -126,7 +126,8 @@ public class SymbolTree {
         if (p.flag.isOperation()) {
             double a = (double) p.leftChild.flag.getData();
             double b = (double) p.rightChild.flag.getData();
-            double ans = operated(a, b, p.flag.getToken());
+            Token operator = p.flag.getToken();
+            double ans = TokenHelp.operate(operator, a, b);
             p.flag = new Symbol(Token.num, ans);
         }
 
@@ -136,21 +137,6 @@ public class SymbolTree {
     }
 
 
-    public double operated(double a, double b, Token token) {
-        switch (token) {
-            case add:
-                return a + b;
-            case sub:
-                return a - b;
-            case mul:
-                return a * b;
-            case div:
-                return a / b;
-            case mod:
-                return a % b;
-            default:
-                throw new RuntimeException("token is not support");
-        }
-    }
+
 
 }

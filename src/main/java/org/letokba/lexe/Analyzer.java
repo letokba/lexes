@@ -61,7 +61,7 @@ public class Analyzer {
             if(i >= array.length) {
                 return i;
             }
-            Token token = transformToken(array[i]);
+            Token token = TokenHelp.queryToken(array[i]);
             queue.add(new Symbol(token, array[i]));
             i++;
         }
@@ -81,6 +81,25 @@ public class Analyzer {
                 j++;
                 isDigit = false;
                 hasDot = true;
+            }else {
+                break;
+            }
+        }
+        return j;
+    }
+
+
+
+    public int tryMatchNumber(char[] array, int j) {
+        boolean isDigit = false;
+        while(j < array.length){
+            if(Character.isDigit(array[j])) {
+                j++;
+                isDigit = true;
+            }
+            else if(array[j] == '.' && isDigit) {
+                j++;
+                isDigit = false;
             }else {
                 break;
             }
@@ -112,53 +131,6 @@ public class Analyzer {
         return isUnderline(ch) || Character.isJavaIdentifierPart(ch);
     }
 
-
-
-
-    public int tryMatchNumber(char[] array, int j) {
-        boolean isDigit = false;
-        while(j < array.length){
-            if(Character.isDigit(array[j])) {
-                j++;
-                isDigit = true;
-            }
-            else if(array[j] == '.' && isDigit) {
-                j++;
-                isDigit = false;
-            }else if(! isOperationalToken(array[j])) {
-                throw new IllegalArgumentException("illegal symbol: " + array[j]);
-            }else {
-                break;
-            }
-        }
-        return j;
-    }
-
-
-
-
-
-
-
-
-    public boolean isOperationalToken(char c) {
-        return c == '+' || c == '-' || c == '*' || c == '/' || c == '(' || c == ')' || c == '%';
-    }
-
-
-
-    public Token transformToken(char c) {
-        Token token = TokenHelp.queryToken(c);
-        if(token != null){
-            return token;
-        }
-        if(Character.isDigit(c)) {
-            return Token.num;
-        }else if(Character.isLetter(c)) {
-            return Token.letter;
-        }
-        throw new IllegalArgumentException("illegal symbol: " + c);
-    }
 
 
 
