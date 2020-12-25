@@ -26,7 +26,7 @@ public class Analyzer {
             Object data;
             Token token;
             if(j == i) {
-                token = transformToken(array[j]);
+                token = TokenHelp.queryToken(array[j]);
                 data = array[j];
                 i++;
             }else {
@@ -142,22 +142,15 @@ public class Analyzer {
 
 
     public boolean isOperationalToken(char c) {
-        return c == '+' || c == '-' || c == '*' || c == '/' || c == '(' || c == ')';
+        return c == '+' || c == '-' || c == '*' || c == '/' || c == '(' || c == ')' || c == '%';
     }
 
 
 
     public Token transformToken(char c) {
-        switch (c) {
-            case '+': return Token.add;
-            case '-': return Token.sub;
-            case '*': return Token.mul;
-            case '/': return Token.dev;
-            case '(': return Token.lBracket;
-            case ')': return Token.rBracket;
-//            case '.': return Token.dot;
-            case '=': return Token.equal;
-            default: break;
+        Token token = TokenHelp.queryToken(c);
+        if(token != null){
+            return token;
         }
         if(Character.isDigit(c)) {
             return Token.num;

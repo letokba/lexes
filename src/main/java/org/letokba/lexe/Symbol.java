@@ -26,7 +26,7 @@ public class Symbol {
     }
 
     public boolean isOperation() {
-        return token == Token.add || token == Token.sub || token == Token.mul || token == Token.dev;
+        return TokenHelp.isOperationalToken(token);
     }
 
     public boolean isLeftBracket() {

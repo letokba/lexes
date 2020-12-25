@@ -17,9 +17,6 @@ public class SymbolTree {
             this.flag = symbol;
         }
 
-        public void setParent(TreeNode parent) {
-            this.parent = parent;
-        }
 
         public void setLeftChild(TreeNode leftChild) {
             this.leftChild = leftChild;
@@ -147,8 +144,10 @@ public class SymbolTree {
                 return a - b;
             case mul:
                 return a * b;
-            case dev:
+            case div:
                 return a / b;
+            case mod:
+                return a % b;
             default:
                 throw new RuntimeException("token is not support");
         }
