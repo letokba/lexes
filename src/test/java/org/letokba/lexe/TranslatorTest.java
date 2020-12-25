@@ -28,7 +28,7 @@ public class TranslatorTest {
 
     @Test
     public void computeExpression() {
-        for(String sample : samples) {
+        for (String sample : samples) {
             double ans = Translator.computeExpression(sample);
             System.out.println(sample + " = " + ans);
         }
@@ -45,18 +45,37 @@ public class TranslatorTest {
     public void readFileAndCompute() throws IOException {
         String filename = "samples.txt";
         Path path = Paths.get(filename);
-        if(! Files.exists(path)) {
+        if (!Files.exists(path)) {
             System.err.println("File is not exist !!!");
         }
-        Files.readAllLines(path)
+        List<String> list = Files.readAllLines(path)
                 .stream()
                 .map(StringUtils::clearBlank)
-                .filter((item) -> ! item.isEmpty())
-                .forEach((sample) -> {
-                    double ans = Translator.computeExpression(sample);
-                    System.out.println(sample + " = " + ans + " ");
-                });
+                .filter((item) -> !item.isEmpty())
+//                .map(Translator::computeExpression)
+                .collect(Collectors.toList());
+
+        List<Double> result = readFileResult();
+
+        for(int i = 0; i < list.size(); i++) {
+            String sample = list.get(i);
+            Double d = Translator.computeExpression(sample);
+
+            System.out.format("%-20s = %5.2f %10s\n", sample, d, (d.equals(result.get(i))));
+        }
+
     }
 
+
+    public static List<Double> readFileResult() throws IOException {
+        String filename = "result.txt";
+        Path path = Paths.get(filename);
+        return Files.readAllLines(path)
+                .stream()
+                .filter((item) -> !item.isEmpty())
+                .map(Double::parseDouble)
+                .collect(Collectors.toList());
+
+    }
 
 }

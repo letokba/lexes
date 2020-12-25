@@ -30,7 +30,7 @@ public class TokenHelp {
     }
 
 
-    static Token queryToken(final char ch) {
+    public static Token queryToken(final char ch) {
         Optional<Token> first =  tokens.stream()
                         .filter((item) -> item.sign == ch)
                         .findFirst();

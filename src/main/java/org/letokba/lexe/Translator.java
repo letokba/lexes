@@ -1,13 +1,14 @@
 package org.letokba.lexe;
 
 
+import org.letokba.lexe.analyse.OperationalExpressionAnalyzer;
 
 /**
  * @author Wait
  * @date 2020/12/23
  */
 public class Translator {
-    final static Analyzer analyzer = new Analyzer();
+    final static OperationalExpressionAnalyzer analyzer = new OperationalExpressionAnalyzer();
 
     public static double computeExpression(String expression) {
         SymbolQueue queue = analyzer.analyzed(expression);
