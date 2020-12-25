@@ -143,7 +143,7 @@ public class SymbolTree {
 
         if (p.flag.isLeftBracket()) {
             if(p.leftChild == null){
-                throw new IllegalArgumentException("缺少右括号");
+                throw new IllegalArgumentException("lack the ')'");
             }
             p.flag = p.rightChild.flag;
         }
