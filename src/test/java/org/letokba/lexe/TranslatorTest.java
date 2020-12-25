@@ -36,7 +36,7 @@ public class TranslatorTest {
 
     @Test
     public void simpleTest() {
-        String sample = "(2 + 3) + ((2 + 3) + 3)";
+        String sample = "2 + 2 * (3 + 2)";
         double ans = Translator.computeExpression(sample);
         System.out.println(sample + " = " + ans);
     }

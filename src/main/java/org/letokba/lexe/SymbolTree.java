@@ -86,23 +86,26 @@ public class SymbolTree {
                     root.setRightChild(node);
                 }
                 if (rootSymbol.isLeftBracket() || symbol.isLeftBracket()) {
+                    // root point move to the next 'root' and move down in tree.
                     root = node;
                 }
                 continue;
             }
             if (symbol.isOperation()) {
                 TreeNode parent = root.parent;
-                // like root is "+", node is "*"
+                // like as root is "+", node is "*"
                 // node should exchange root's rightChild not root
-                // become "*" and "/” must executing before "+" or "-"
-                // After building, the calculating order is down to up.
+                // because "*" and "/” must be executed before "+" or "-"
+                // After building, the calculating order is from down to up.
                 if (rootSymbol.isOperation() && symbol.lowTo(rootSymbol)) {
                     node.setLeftChild(root.rightChild);
                     root.setRightChild(node);
                 } else {
                     parent.setRightChild(node);
                     node.setLeftChild(root);
-                    root = node;
+                    // here, the root point also move to the new 'root' but not move in tree.
+                    // root = node;
+                    root = parent.rightChild;
                 }
             }
         }
