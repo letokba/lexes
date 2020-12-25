@@ -40,6 +40,81 @@ public class Analyzer {
         return i;
     }
 
+
+
+
+    public int unsafeMoreAnalyzed(String expression, SymbolQueue queue) {
+        int i = 0;
+        char[] array = expression.toCharArray();
+
+        while (i < array.length) {
+            int j = tryMatchDigit(array, i);
+            if(j > i) {
+                queue.add(new Symbol(Token.num, expression.substring(i, j)));
+                i = j;
+            }
+            j = tryMatchVariableName(array, i);
+            if(j > i) {
+                queue.add(new Symbol(Token.letter, expression.substring(i, j)));
+                i = j;
+            }
+            if(i >= array.length) {
+                return i;
+            }
+            Token token = transformToken(array[i]);
+            queue.add(new Symbol(token, array[i]));
+            i++;
+        }
+
+        return i;
+    }
+
+    private int tryMatchDigit(char[] array, int j) {
+        boolean isDigit = false;
+        boolean hasDot = false;
+        while(j < array.length){
+            if(Character.isDigit(array[j])) {
+                j++;
+                isDigit = true;
+            }
+            else if(array[j] == '.' && isDigit && !hasDot) {
+                j++;
+                isDigit = false;
+                hasDot = true;
+            }else {
+                break;
+            }
+        }
+        return j;
+    }
+
+    private int tryMatchVariableName(char[] array, int i) {
+        if(i >= array.length || !isLetterOrUnderLine(array[i])) {
+            return i;
+        }
+        i++;
+        while (i < array.length) {
+            if(!Character.isJavaIdentifierPart(array[i])) {
+                break;
+            }
+            i++;
+        }
+        return i;
+    }
+
+    private boolean isUnderline(char ch) {
+        return ch == '_';
+    }
+
+
+
+    private boolean isLetterOrUnderLine(char ch) {
+        return isUnderline(ch) || Character.isJavaIdentifierPart(ch);
+    }
+
+
+
+
     public int tryMatchNumber(char[] array, int j) {
         boolean isDigit = false;
         while(j < array.length){
@@ -80,8 +155,16 @@ public class Analyzer {
             case '/': return Token.dev;
             case '(': return Token.lBracket;
             case ')': return Token.rBracket;
-            default: return Token.num;
+//            case '.': return Token.dot;
+            case '=': return Token.equal;
+            default: break;
         }
+        if(Character.isDigit(c)) {
+            return Token.num;
+        }else if(Character.isLetter(c)) {
+            return Token.letter;
+        }
+        throw new IllegalArgumentException("illegal symbol: " + c);
     }
 
 
