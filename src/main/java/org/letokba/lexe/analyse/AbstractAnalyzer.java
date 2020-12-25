@@ -1,5 +1,10 @@
 package org.letokba.lexe.analyse;
 
+import org.letokba.lexe.Symbol;
+import org.letokba.lexe.SymbolQueue;
+
+import java.util.Iterator;
+
 /**
  * @author Wait
  * @date 2020/12/25

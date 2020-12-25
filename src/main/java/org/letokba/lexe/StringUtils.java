@@ -31,4 +31,24 @@ public class StringUtils {
         }
         return s.substring(i, j + 1);
     }
+
+    public static String clearMoreWhitespace(String s) {
+        StringBuilder builder = new StringBuilder();
+        int i = 0;
+        while (i < s.length()) {
+            char ch = s.charAt(i);
+            builder.append(ch);
+            if(Character.isWhitespace(ch)) {
+                int j = i + 1;
+                while (j < s.length() && Character.isWhitespace(s.charAt(j))) {
+                    j++;
+                }
+                i = j - 1;
+            }
+            i++;
+        }
+        return builder.toString();
+    }
+
+
 }

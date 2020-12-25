@@ -4,9 +4,9 @@ import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.Optional;
 import java.util.function.DoubleBinaryOperator;
-import java.util.function.Function;
 
 import static org.letokba.lexe.Token.*;
+
 /**
  * @author Wait
  * @date 2020/12/25
@@ -25,33 +25,33 @@ public class TokenHelp {
         operatorEnumMap.put(mod, new Mod());
     }
 
-    static boolean isOperationalToken(Token token) {
+    public static boolean isOperationalToken(Token token) {
         return operationSet.contains(token);
     }
 
 
     public static Token queryToken(final char ch) {
-        Optional<Token> first =  tokens.stream()
-                        .filter((item) -> item.sign == ch)
-                        .findFirst();
-        if(first.isPresent()) {
+        Optional<Token> first = tokens.stream()
+                .filter((item) -> item.sign == ch)
+                .findFirst();
+        if (first.isPresent()) {
             return first.get();
         }
 
-        if(Character.isDigit(ch)) {
+        if (Character.isDigit(ch)) {
             return Token.num;
-        }else if(Character.isLetter(ch)) {
+        } else if (Character.isLetter(ch)) {
             return Token.letter;
         }
         throw new IllegalArgumentException("illegal symbol: " + ch);
     }
 
-    static boolean isDefinedToken(final char ch) {
+    public static boolean isDefinedToken(final char ch) {
         return queryToken(ch) != null;
     }
 
 
-     static class Add implements DoubleBinaryOperator {
+    static class Add implements DoubleBinaryOperator {
         @Override
         public double applyAsDouble(double left, double right) {
             return left + right;
@@ -64,7 +64,6 @@ public class TokenHelp {
             return left - right;
         }
     }
-
 
 
     static class Mul implements DoubleBinaryOperator {
@@ -89,9 +88,8 @@ public class TokenHelp {
     }
 
 
-
     public static double operate(Token operator, double a, double b) {
-        if(!operatorEnumMap.containsKey(operator)) {
+        if (!operatorEnumMap.containsKey(operator)) {
             throw new IllegalArgumentException(operator.sign + "not support bit-operator");
         }
         return operatorEnumMap.get(operator).applyAsDouble(a, b);

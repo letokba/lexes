@@ -13,7 +13,8 @@ public class AssignExpressAnalyzer extends AbstractAnalyzer{
     @Override
     public SymbolQueue analyzed(String singeLine) {
         SymbolQueue queue = new SymbolQueue();
-        singeLine = StringUtils.clearBlank(singeLine);
+        singeLine = StringUtils.clearMoreWhitespace(singeLine);
+        singeLine = StringUtils.strip(singeLine);
         int i = unsafeMoreAnalyzed(singeLine, queue);
         return queue;
     }
@@ -24,6 +25,11 @@ public class AssignExpressAnalyzer extends AbstractAnalyzer{
         char[] array = expression.toCharArray();
 
         while (i < array.length) {
+            if(Character.isWhitespace(i)) {
+                i++;
+                continue;
+            }
+
             int j = tryMatchDigit(array, i);
             if(j > i) {
                 queue.add(new Symbol(Token.num, expression.substring(i, j)));
@@ -37,12 +43,14 @@ public class AssignExpressAnalyzer extends AbstractAnalyzer{
             if(i >= array.length) {
                 return i;
             }
-            Token token = TokenHelp.queryToken(array[i]);
-            check(queue, token);
-            queue.add(new Symbol(token, array[i]));
+            char ch = array[i];
+            if(!Character.isWhitespace(ch)) {
+                Token token = TokenHelp.queryToken(ch);
+                check(queue, token);
+                queue.add(new Symbol(token, ch));
+            }
             i++;
         }
-
         return i;
     }
 
@@ -73,8 +81,11 @@ public class AssignExpressAnalyzer extends AbstractAnalyzer{
             }
             i++;
         }
+
         return i;
     }
+
+
 
     private boolean isUnderline(char ch) {
         return ch == '_';
