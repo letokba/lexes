@@ -8,12 +8,14 @@ import org.letokba.lexe.analyse.OperationalExpressionAnalyzer;
  * @date 2020/12/23
  */
 public class Translator {
-    final static OperationalExpressionAnalyzer analyzer = new OperationalExpressionAnalyzer();
+    final static OperationalExpressionAnalyzer ANALYZER = new OperationalExpressionAnalyzer();
 
     public static double computeExpression(String expression) {
-        SymbolQueue queue = analyzer.analyzed(expression);
+        SymbolQueue queue = ANALYZER.analyzed(expression);
         SymbolTree symbolTree = SymbolTree.builder(queue);
 
         return symbolTree.decode();
     }
+
+
 }

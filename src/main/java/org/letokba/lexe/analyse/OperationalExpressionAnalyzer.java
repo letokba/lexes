@@ -38,7 +38,7 @@ public class OperationalExpressionAnalyzer extends AbstractAnalyzer{
             Object data;
             Token token;
             if(j == i) {
-                token = TokenHelp.queryToken(array[j]);
+                token = queryToken(array[j]);
                 data = array[j];
                 i++;
             }else {
@@ -50,6 +50,14 @@ public class OperationalExpressionAnalyzer extends AbstractAnalyzer{
 
         }
         return i;
+    }
+
+    private Token queryToken(char ch) {
+        Token token = TokenHelp.queryToken(ch);
+        if(token == Token.letter || token == Token.equal) {
+            throw new IllegalArgumentException("illegal symbol: " + ch);
+        }
+        return token;
     }
 
 }

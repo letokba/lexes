@@ -69,10 +69,12 @@ public class SymbolTree {
 
             if (symbol.isRightBracket()) {
                 root = root.parent;
+                if(root.leftChild != null) {
+                    throw new IllegalArgumentException("')' is more");
+                }
                 root.setLeftChild(node);
                 continue;
             }
-
             if (symbol.isLeftBracket() || symbol.isNum()) {
                 // we think the "(...)" is same with number
                 // only one, the "(" must be the root to transmit the next symbol like number or "("
@@ -106,6 +108,8 @@ public class SymbolTree {
                 }
             }
         }
+
+
         return p.rightChild;
     }
 
@@ -124,14 +128,23 @@ public class SymbolTree {
         postOrder(p.rightChild);
 
         if (p.flag.isOperation()) {
-            double a = (double) p.leftChild.flag.getData();
-            double b = (double) p.rightChild.flag.getData();
+            double a, b;
+            try{
+                a = (double) p.leftChild.flag.getData();
+                b = (double) p.rightChild.flag.getData();
+            }catch (NullPointerException e) {
+                throw new IllegalArgumentException("expression error. please check!");
+            }
+
             Token operator = p.flag.getToken();
             double ans = TokenHelp.operate(operator, a, b);
             p.flag = new Symbol(Token.num, ans);
         }
 
         if (p.flag.isLeftBracket()) {
+            if(p.leftChild == null){
+                throw new IllegalArgumentException("缺少右括号");
+            }
             p.flag = p.rightChild.flag;
         }
     }
