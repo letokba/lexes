@@ -1,5 +1,5 @@
 package org.letokba.lexe;
-
+import org.letokba.lexe.TreeNode;
 /**
  * @author Wait
  * @date 2020/12/23
@@ -7,38 +7,8 @@ package org.letokba.lexe;
 public class SymbolTree {
     private TreeNode root;
 
-    private static class TreeNode {
-        Symbol flag;
-        TreeNode leftChild;
-        TreeNode rightChild;
-        TreeNode parent;
-
-        public TreeNode(Symbol symbol) {
-            this.flag = symbol;
-        }
-
-
-        public void setLeftChild(TreeNode leftChild) {
-            this.leftChild = leftChild;
-            if (leftChild == null) {
-                return;
-            }
-            leftChild.parent = this;
-        }
-
-
-        public void setRightChild(TreeNode rightChild) {
-            this.rightChild = rightChild;
-            if (rightChild == null) {
-                return;
-            }
-            rightChild.parent = this;
-        }
-
-        @Override
-        public String toString() {
-            return "(" + flag + ")";
-        }
+    public TreeNode getRoot() {
+        return root;
     }
 
     private SymbolTree() {
@@ -113,41 +83,10 @@ public class SymbolTree {
         return p.rightChild;
     }
 
-    public double decode() {
-        postOrder(this.root);
-        return (double) this.root.flag.getData();
-    }
 
 
-    public void postOrder(TreeNode p) {
-        if (p == null || (p.leftChild == null && p.rightChild == null)) {
-            return;
-        }
 
-        postOrder(p.leftChild);
-        postOrder(p.rightChild);
 
-        if (p.flag.isOperation()) {
-            double a, b;
-            try{
-                a = (double) p.leftChild.flag.getData();
-                b = (double) p.rightChild.flag.getData();
-            }catch (NullPointerException e) {
-                throw new IllegalArgumentException("expression error. please check!");
-            }
-
-            Token operator = p.flag.getToken();
-            double ans = TokenHelp.operate(operator, a, b);
-            p.flag = new Symbol(Token.num, ans);
-        }
-
-        if (p.flag.isLeftBracket()) {
-            if(p.leftChild == null){
-                throw new IllegalArgumentException("lack the ')'");
-            }
-            p.flag = p.rightChild.flag;
-        }
-    }
 
 
 

@@ -14,7 +14,7 @@ public class AssignExpressAnalyzer extends AbstractAnalyzer{
 
 
     @Override
-    SymbolQueue analyzed(String text) {
+    public SymbolQueue analyzed(String text) {
         return null;
     }
 

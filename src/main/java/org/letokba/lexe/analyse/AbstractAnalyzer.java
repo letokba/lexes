@@ -1,22 +1,10 @@
 package org.letokba.lexe.analyse;
 
-import org.letokba.lexe.SymbolQueue;
-
 /**
  * @author Wait
  * @date 2020/12/25
  */
-public abstract class AbstractAnalyzer {
-
-
-    /**
-     * 不安全的分析
-     * @param text 待分析的文本
-     * @return Symbol Queue
-     */
-    abstract SymbolQueue analyzed(String text);
-
-
+public abstract class AbstractAnalyzer implements Analyzer{
 
     public int tryMatchDigit(char[] array, int j) {
         boolean isDigit = false;

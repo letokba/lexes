@@ -90,7 +90,7 @@ public class TokenHelp {
 
 
 
-    static double operate(Token operator, double a, double b) {
+    public static double operate(Token operator, double a, double b) {
         if(!operatorEnumMap.containsKey(operator)) {
             throw new IllegalArgumentException(operator.sign + "not support bit-operator");
         }

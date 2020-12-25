@@ -36,7 +36,7 @@ public class TranslatorTest {
 
     @Test
     public void simpleTest() {
-        String sample = "((1 ++2)";
+        String sample = "(1 +2)";
         double ans = Translator.computeExpression(sample);
         System.out.println(sample + " = " + ans);
     }
