@@ -36,7 +36,7 @@ public class TranslatorTest {
 
     @Test
     public void simpleTest() {
-        String sample = "((2a + 3) + 2) + 2";
+        String sample = "(2 + 3) + 2";
         double ans = Translator.computeExpression(sample);
         System.out.println(sample + " = " + ans);
     }
@@ -48,7 +48,6 @@ public class TranslatorTest {
         if(! Files.exists(path)) {
             System.err.println("File is not exist !!!");
         }
-
         Files.readAllLines(path)
                 .stream()
                 .map(StringUtils::clearBlank)

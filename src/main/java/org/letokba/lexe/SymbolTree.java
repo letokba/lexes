@@ -63,6 +63,7 @@ public class SymbolTree {
 
     private TreeNode subBuild(SymbolQueue queue) {
         TreeNode root = new TreeNode(new Symbol(Token.lBracket, 0));
+        root.leftChild = new TreeNode(new Symbol(Token.rBracket, 0));
         TreeNode p = root;
         while (queue.size() > 0) {
             Symbol symbol = queue.poll();
@@ -71,26 +72,21 @@ public class SymbolTree {
 
             if (symbol.isRightBracket()) {
                 root = root.parent;
-                root.setRightChild(node);
+                root.setLeftChild(node);
                 continue;
             }
 
             if (symbol.isLeftBracket() || symbol.isNum()) {
                 // we think the "(...)" is same with number
-                // only one, the "(" must be the root to transmit the next symbol (number or "(" )
+                // only one, the "(" must be the root to transmit the next symbol like number or "("
                 // but number is mostly the rightChild unless not that it is the first by expression
-                if (rootSymbol.isLeftBracket()) {
-                    root.setLeftChild(node);
-                    root = node;
+                if (root.rightChild != null) {
+                    root.rightChild.setRightChild(node);
                 } else {
-                    if (root.rightChild != null) {
-                        root.rightChild.setRightChild(node);
-                    } else {
-                        root.setRightChild(node);
-                    }
-                    if (symbol.isLeftBracket()) {
-                        root = node;
-                    }
+                    root.setRightChild(node);
+                }
+                if (rootSymbol.isLeftBracket() || symbol.isLeftBracket()) {
+                    root = node;
                 }
                 continue;
             }
@@ -114,7 +110,7 @@ public class SymbolTree {
                 }
             }
         }
-        return p.leftChild;
+        return p.rightChild;
     }
 
     public double decode() {
@@ -139,7 +135,7 @@ public class SymbolTree {
         }
 
         if (p.flag.isLeftBracket()) {
-            p.flag = p.leftChild.flag;
+            p.flag = p.rightChild.flag;
         }
     }
 
