@@ -1,9 +1,6 @@
 package org.letokba.lexe.analyse;
 
-import org.letokba.lexe.Symbol;
-import org.letokba.lexe.SymbolQueue;
-import org.letokba.lexe.Token;
-import org.letokba.lexe.TokenHelp;
+import org.letokba.lexe.*;
 
 /**
  * @author Wait
@@ -14,8 +11,11 @@ public class AssignExpressAnalyzer extends AbstractAnalyzer{
 
 
     @Override
-    public SymbolQueue analyzed(String text) {
-        return null;
+    public SymbolQueue analyzed(String singeLine) {
+        SymbolQueue queue = new SymbolQueue();
+        singeLine = StringUtils.clearBlank(singeLine);
+        int i = unsafeMoreAnalyzed(singeLine, queue);
+        return queue;
     }
 
 
@@ -38,12 +38,28 @@ public class AssignExpressAnalyzer extends AbstractAnalyzer{
                 return i;
             }
             Token token = TokenHelp.queryToken(array[i]);
+            check(queue, token);
             queue.add(new Symbol(token, array[i]));
             i++;
         }
 
         return i;
     }
+
+    private void check(SymbolQueue queue, Token token) {
+        if(queue.isEmpty()) {
+            return;
+        }
+        Symbol symbol = queue.peek();
+        if(illegalVariable(token,symbol.getToken(), queue.size())) {
+            throw new IllegalArgumentException("illegal variable name: " + symbol.getData());
+        }
+    }
+
+    private boolean illegalVariable(Token token, Token preToken, int size) {
+        return token == Token.equal && (size > 2 || preToken != Token.letter);
+    }
+
 
 
     private int tryMatchVariableName(char[] array, int i) {

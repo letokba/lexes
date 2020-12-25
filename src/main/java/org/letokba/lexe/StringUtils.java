@@ -17,4 +17,18 @@ public class StringUtils {
         return builder.toString();
     }
 
+    static public String strip(String s) {
+        assert s != null;
+
+        int len = s.length();
+        int i = 0, j = len - 1;
+        while ((i < s.length() && Character.isWhitespace(s.charAt(i)))) {
+            i++;
+        }
+
+        while ((j > i && Character.isWhitespace(s.charAt(j)))) {
+            j--;
+        }
+        return s.substring(i, j + 1);
+    }
 }
