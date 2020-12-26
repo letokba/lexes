@@ -4,7 +4,7 @@ a simple cached Java Terminal Calculator.
 
 
 
-## 测试样本
+## Test Samples
 
 ```text
     "(1 + 2) * 3",                      // 9
@@ -19,7 +19,7 @@ a simple cached Java Terminal Calculator.
 
 ```
 
-## 测试结果
+## Test Result
 
 ```text
 
@@ -36,25 +36,28 @@ a simple cached Java Terminal Calculator.
 
 ```
 
-## 基本思路
+## Basic Idea
 
-### 生成队列
+### Created Queue
 
 ![生成队列](assets/created-symbols-queue.png)
 
-### 生成符号树
+### Created Symbol-Tree
 
-这里，将例如“(2 + 3)”这样的子表达式，在符号树等价于 “5”，可以想象为二叉树上可以折叠的节点。所以当父节点为“(”，其右节点一定是”)“。
-虽然乘法和除法的优先级高于加法和减法，在二叉树中却相反。当`*`遇到`+`将成为它右孩子，而非向一般的成为父节点。
+Here, the sub expression is equal to number in symbol tree that like `(2 + 3)`. You can think it is a
+collapsible node in the binary tree. So, its left child is `)` when the parent node is `(`. the priority of Mul 
+and Div is higher than ADD and SUB, but that is contrary in tree. When `*` meet the `+`, it will become the 
+right child of the node(`+`), but become the parent node as usual.
 
-#### 规则
+#### Rules
 
-- `(` 和数字一定位于右节点（除了表达式中出现的第一个数字）。
-- `(` 是子表达式开启的标志，只能短暂的拥有`Root`指针。
-- `)`一定是左节点，其父节点一定是`(`
-- `)` 运算优先级位于高优先级的节点下方。
+- `(` and Number must be the right child (except the first number in expression)
+- `(` is the flag of starting sub-expression, it only  holds moment `Root` point。
+- `)` is the left child and its parent must be `(`
 
-#### 具体过程
+
+
+#### Specific Process
 
 1. 初始化树，根节点默认为 `(`, 记为 `Root`指针。同时为其右节点设置一个 `)`节点；
 2. 设置一个 `p` 节点记录根节点
@@ -71,19 +74,21 @@ a simple cached Java Terminal Calculator.
       - `Root`指针跳回到其父节点位置，设置其右节点为 `ei`。
 4. 队列为空后，返回`p`的右子树，即可。
 
-## 遍历树
+## Post-Order Traverse
 
-构建完符号树，采用后序遍历，从下至上进行运算。运算规则为，若游标节点处在运算符节点上，执行 `左节点 @ 右节点`（其中 @代表运算符）；
-如果处在左括号节点上，只需要节点的把其右节点的值copy过来，以便向上传递。
+After building symbol tree, We will use post-order traverse to calculate. When the point is located the middle node,
+We will call its action.
 
-## 获取结果
+## Result
 
-最后，符号数的根节点的值即为文本表达式的运算结果。
+if the root is 'Equal' Symbol, We need make the left child's data be a variable name, and make the right child's
+data be the value. Then We save the key-value in HashMap. While, you could directly input an expression and don't
+wish saving it, we only give the root's data. Lastly, we can show the result in Terminal or other.
 
 
 
 ------------
 
-## 演示
+## Display
 
-![](assets/2020-12-24-17-09-18.gif)
+![](assets/lexes-v2.gif)

@@ -15,7 +15,8 @@ public class Main {
 
     private static final String QUIT = "quit()";
 
-    private static final String WELCOME = "Welcome to Lexes !\n";
+    private static final String WELCOME = "Welcome to Lexes !\n" +
+            "You can define variable to save the result. \n";
 
     private Translator<Double> translator;
 
