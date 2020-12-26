@@ -1,9 +1,9 @@
 package org.letokba.lexe.help;
 
-import org.letokba.lexe.Token;
-import org.letokba.lexe.TokenHelp;
+import org.letokba.lexe.core.Token;
+import org.letokba.lexe.core.TokenHelp;
 
-import static org.letokba.lexe.Token.*;
+import static org.letokba.lexe.core.Token.*;
 import java.util.EnumMap;
 
 /**

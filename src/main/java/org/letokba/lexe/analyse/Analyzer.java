@@ -1,6 +1,6 @@
 package org.letokba.lexe.analyse;
 
-import org.letokba.lexe.SymbolQueue;
+import org.letokba.lexe.core.SymbolQueue;
 
 /**
  * @author Wait

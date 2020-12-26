@@ -1,10 +1,9 @@
 package org.letokba.lexe;
 
 import org.junit.Test;
+import org.letokba.lexe.util.StringUtils;
 
 import java.util.Arrays;
-
-import static org.junit.Assert.*;
 
 public class StringUtilsTest {
     static String[] samples = {

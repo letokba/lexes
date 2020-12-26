@@ -1,9 +1,7 @@
 package org.letokba.lexe.analyse;
 
 import org.junit.Test;
-import org.letokba.lexe.SymbolQueue;
-
-import static org.junit.Assert.*;
+import org.letokba.lexe.core.SymbolQueue;
 
 public class AssignExpressAnalyzerTest {
     Analyzer analyzer = new AssignExpressAnalyzer();

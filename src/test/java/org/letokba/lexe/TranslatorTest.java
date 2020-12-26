@@ -1,6 +1,10 @@
 package org.letokba.lexe;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.letokba.lexe.Translate.Translator;
+import org.letokba.lexe.Translate.TranslatorFactory;
+import org.letokba.lexe.util.StringUtils;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -8,8 +12,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static org.junit.Assert.*;
 
 public class TranslatorTest {
 
@@ -25,20 +27,27 @@ public class TranslatorTest {
             "3 + (2 + 3) * 3"                   // 18
     };
 
+    private Translator<Double> translator;
+
+    @Before
+    public void init() {
+        translator = new TranslatorFactory().getTranslator(true);
+    }
+
 
     @Test
     public void computeExpression() {
         for (String sample : samples) {
-            double ans = Translator.computeExpression(sample);
+            double ans = translator.translated(sample);
             System.out.println(sample + " = " + ans);
         }
     }
 
     @Test
     public void defineVariable() {
-        double a = Translator.defineVariable("a = ( 1 + 2) * 3");
-        double b = Translator.defineVariable("b = a + 2");
-        double c = Translator.defineVariable("c = b");
+        double a = translator.translated("a = ( 1 + 2) * 3");
+        double b = translator.translated("b = a + 2");
+        double c = translator.translated("c = b");
         System.out.println("a = " + a + " , b = " + b + " , c = " + c);
 
     }
@@ -46,7 +55,7 @@ public class TranslatorTest {
     @Test
     public void simpleTest() {
         String sample = "(1 + 2)";
-        double ans = Translator.computeExpression(sample);
+        double ans = translator.translated(sample);
         System.out.println(sample + " = " + ans);
     }
 
@@ -61,14 +70,13 @@ public class TranslatorTest {
                 .stream()
                 .map(StringUtils::clearBlank)
                 .filter((item) -> !item.isEmpty())
-//                .map(Translator::computeExpression)
                 .collect(Collectors.toList());
 
         List<Double> result = readFileResult();
 
         for(int i = 0; i < list.size(); i++) {
             String sample = list.get(i);
-            Double d = Translator.defineVariable(sample);
+            Double d = translator.translated(sample);
 
             System.out.format("%-20s = %5.2f %10s\n", sample, d, (d.equals(result.get(i))));
         }

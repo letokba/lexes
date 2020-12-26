@@ -1,8 +1,10 @@
 package org.letokba.lexe.analyse;
 
-import org.letokba.lexe.*;
-
-import java.util.Iterator;
+import org.letokba.lexe.core.Symbol;
+import org.letokba.lexe.core.SymbolQueue;
+import org.letokba.lexe.core.Token;
+import org.letokba.lexe.core.TokenHelp;
+import org.letokba.lexe.util.StringUtils;
 
 /**
  * @author Wait

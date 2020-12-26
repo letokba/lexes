@@ -1,17 +1,16 @@
 package org.letokba.lexe.calculate;
 
-import org.letokba.lexe.Symbol;
-import org.letokba.lexe.SymbolTree;
-import org.letokba.lexe.Token;
-import org.letokba.lexe.TokenHelp;
-import org.letokba.lexe.TreeNode;
+import org.letokba.lexe.core.Symbol;
+import org.letokba.lexe.core.SymbolTree;
+import org.letokba.lexe.core.Token;
+import org.letokba.lexe.core.TokenHelp;
+import org.letokba.lexe.core.TreeNode;
 
 /**
  * @author Wait
  * @date 2020/12/25
  */
 public class NumberCalculator implements Calculator<Double> {
-
     @Override
     public Double calculated(SymbolTree tree) {
         postOrder(tree.getRoot());

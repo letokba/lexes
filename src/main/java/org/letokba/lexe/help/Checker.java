@@ -1,7 +1,7 @@
 package org.letokba.lexe.help;
 
 
-import org.letokba.lexe.Token;
+import org.letokba.lexe.core.Token;
 
 /**
  * @author Wait

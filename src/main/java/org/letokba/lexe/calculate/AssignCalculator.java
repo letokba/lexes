@@ -1,6 +1,6 @@
 package org.letokba.lexe.calculate;
 
-import org.letokba.lexe.Symbol;
+import org.letokba.lexe.core.Symbol;
 
 import java.util.Map;
 

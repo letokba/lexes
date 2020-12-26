@@ -1,10 +1,10 @@
 package org.letokba.lexe.help;
 
-import org.letokba.lexe.Token;
-import org.letokba.lexe.TokenHelp;
+import org.letokba.lexe.core.Token;
+import org.letokba.lexe.core.TokenHelp;
 
-import static org.letokba.lexe.Token.equal;
-import static org.letokba.lexe.Token.rBracket;
+import static org.letokba.lexe.core.Token.equal;
+import static org.letokba.lexe.core.Token.rBracket;
 
 /**
  * @author Wait

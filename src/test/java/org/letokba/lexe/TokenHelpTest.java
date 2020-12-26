@@ -1,10 +1,8 @@
 package org.letokba.lexe;
 
 import org.junit.Test;
-
-import java.util.function.DoubleBinaryOperator;
-
-import static org.junit.Assert.*;
+import org.letokba.lexe.core.Token;
+import org.letokba.lexe.core.TokenHelp;
 
 public class TokenHelpTest {
 

@@ -1,5 +1,9 @@
 package org.letokba.lexe;
 
+import org.letokba.lexe.Translate.Translator;
+import org.letokba.lexe.Translate.TranslatorFactory;
+import org.letokba.lexe.util.StringUtils;
+
 import java.util.Scanner;
 
 /**
@@ -11,10 +15,20 @@ public class Main {
 
     private static final String QUIT = "quit()";
 
-
     private static final String WELCOME = "Welcome to Lexes !\n";
 
+    private Translator<Double> translator;
+
+    private Main() {
+        init();
+    }
+
+    public void init() {
+        translator = new TranslatorFactory().getTranslator(false);
+    }
+
     public static void main(String[] args) {
+        Main main = new Main();
         Scanner in = new Scanner(System.in);
         System.out.println(WELCOME);
         while (true) {
@@ -24,7 +38,7 @@ public class Main {
             if(QUIT.equals(command)){
                 System.exit(1);
             }if(! command.isEmpty()) {
-                String reply = executed(command);
+                String reply = main.executed(command);
                 System.out.println(reply);
             }
         }
@@ -34,10 +48,10 @@ public class Main {
         System.out.print(SUFFIX);
     }
 
-    public static String executed(String expression) {
+    public  String executed(String expression) {
         String reply;
         try {
-            double v = Translator.computeExpression(expression);
+            double v = translator.translated(expression);
             reply = String.valueOf(v);
         }catch (RuntimeException e) {
             reply = e.getMessage();

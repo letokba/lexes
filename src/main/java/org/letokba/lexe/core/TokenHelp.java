@@ -1,5 +1,7 @@
-package org.letokba.lexe;
+package org.letokba.lexe.core;
 
+import org.letokba.lexe.core.Symbol;
+import org.letokba.lexe.core.Token;
 import org.letokba.lexe.help.Checker;
 import org.letokba.lexe.help.SymbolHelpFactory;
 
@@ -8,7 +10,7 @@ import java.util.EnumSet;
 import java.util.Optional;
 import java.util.function.DoubleBinaryOperator;
 
-import static org.letokba.lexe.Token.*;
+import static org.letokba.lexe.core.Token.*;
 
 /**
  * @author Wait

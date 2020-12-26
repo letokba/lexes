@@ -1,9 +1,9 @@
 package org.letokba.lexe.analyse;
 
-import org.letokba.lexe.Symbol;
-import org.letokba.lexe.SymbolQueue;
-import org.letokba.lexe.Token;
-import org.letokba.lexe.TokenHelp;
+import org.letokba.lexe.core.Symbol;
+import org.letokba.lexe.core.SymbolQueue;
+import org.letokba.lexe.core.Token;
+import org.letokba.lexe.core.TokenHelp;
 
 import java.util.Iterator;
 import java.util.Stack;

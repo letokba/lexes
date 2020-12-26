@@ -1,4 +1,6 @@
-package org.letokba.lexe;
+package org.letokba.lexe.core;
+
+import org.letokba.lexe.core.Symbol;
 
 import java.util.AbstractQueue;
 import java.util.Iterator;

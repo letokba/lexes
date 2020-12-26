@@ -1,9 +1,8 @@
 package org.letokba.lexe.help;
 
-import org.letokba.lexe.Symbol;
-import org.letokba.lexe.Token;
+import org.letokba.lexe.core.Token;
 
-import static org.letokba.lexe.Token.*;
+import static org.letokba.lexe.core.Token.*;
 
 /**
  * @author Wait

@@ -1,4 +1,4 @@
-package org.letokba.lexe;
+package org.letokba.lexe.util;
 
 /**
  * @author Wait
