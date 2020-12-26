@@ -24,7 +24,7 @@ public class Main {
     }
 
     public void init() {
-        translator = new TranslatorFactory().getTranslator(false);
+        translator = new TranslatorFactory().getTranslator(true);
     }
 
     public static void main(String[] args) {

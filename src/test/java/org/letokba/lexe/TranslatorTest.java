@@ -27,6 +27,15 @@ public class TranslatorTest {
             "3 + (2 + 3) * 3"                   // 18
     };
 
+    static String[] cachedSamples = {
+            "a = 1 + 2",
+            "b = a + 2",
+            "a = (2.5 - 0.5) * 2",
+            "a",
+            "c = d + 2",
+            " e "
+    };
+
     private Translator<Double> translator;
 
     @Before
@@ -49,7 +58,18 @@ public class TranslatorTest {
         double b = translator.translated("b = a + 2");
         double c = translator.translated("c = b");
         System.out.println("a = " + a + " , b = " + b + " , c = " + c);
+    }
 
+    @Test
+    public void cacheExpression() {
+        for (String sample : cachedSamples) {
+            try {
+                double ans = translator.translated(sample);
+                System.out.println(sample + " = " + ans);
+            }catch (IllegalArgumentException e) {
+                System.err.println(e.getMessage());
+            }
+        }
     }
 
     @Test

@@ -25,15 +25,9 @@ public class CachedTranslator extends Translator<Double>{
 
     @Override
     public Double translated(String expression) {
-        Double value;
         SymbolQueue queue = getAnalyzer().analyzed(expression);
-        if(queue.size() == 1) {
-            String name = (String) queue.peek().getData();
-            return cache.get(name);
-        }
         SymbolTree symbolTree = SymbolTree.builder(queue);
-        value = getCalculator().calculated(symbolTree);
-        return value;
+        return getCalculator().calculated(symbolTree);
     }
 
 

@@ -37,7 +37,12 @@ public class AssignCalculator  extends NumberCalculator{
     public Double transformValue(Symbol symbol) {
         if(symbol.isVariable()) {
             String name = (String) symbol.getData();
-            return cache.get(name);
+            Double value = cache.get(name);
+            if(value == null) {
+                throw new IllegalArgumentException(name + " is not defined");
+            }
+            return value;
+
         }
         return super.transformValue(symbol);
     }
