@@ -6,6 +6,7 @@ import org.letokba.lexe.Token;
 import org.letokba.lexe.TokenHelp;
 
 import java.util.Iterator;
+import java.util.Stack;
 
 /**
  * @author Wait
@@ -39,34 +40,36 @@ public abstract class AbstractAnalyzer implements Analyzer{
         Iterator<Symbol> it = queue.iterator();
         Symbol symbol = it.next();
         checkHead(symbol);
-
-        boolean bracketState = false;
+        checkBracket(queue);
         while (it.hasNext()) {
             Symbol next = it.next();
             boolean result = TokenHelp.getChecker(symbol).checkAfter(next.getToken());
             if(! result) {
                 throw new IllegalArgumentException("illegal expression: " + next.getData() + " is not allow after " + symbol.getData());
             }
-            bracketState = checkBracket(symbol, bracketState);
             symbol = next;
         }
-        checkBracket(symbol, bracketState);
+
         checkTail(symbol);
     }
 
-    private boolean checkBracket(Symbol symbol, boolean state) {
-        if(symbol.isLeftBracket()) {
-            if(state){
-                throw new IllegalArgumentException("illegal expression: " + "lack the ')'");
+    private void checkBracket(SymbolQueue queue) {
+        Stack<Object> stack = new Stack<>();
+        for (Symbol symbol : queue) {
+            if (symbol.isLeftBracket()) {
+                stack.push(symbol.getData());
+                continue;
             }
-            state = true;
-        }else if(symbol.isRightBracket()) {
-            if(!state) {
-                throw new IllegalArgumentException("illegal expression: " + "')' is more");
+            if (symbol.isRightBracket()) {
+                if(stack.isEmpty()) {
+                    throw new IllegalArgumentException("illegal expression: " + " ')' is more.");
+                }
+                stack.pop();
             }
-            state = false;
         }
-        return state;
+        if(stack.size() != 0){
+            throw new IllegalArgumentException("illegal expression: " + "')' is less.");
+        }
     }
 
     private void checkHead(Symbol symbol) {
