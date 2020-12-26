@@ -2,6 +2,8 @@ package org.letokba.lexe.analyse;
 
 import org.letokba.lexe.*;
 
+import java.util.Iterator;
+
 /**
  * @author Wait
  * @date 2020/12/25
@@ -16,6 +18,7 @@ public class AssignExpressAnalyzer extends AbstractAnalyzer{
         singeLine = StringUtils.clearMoreWhitespace(singeLine);
         singeLine = StringUtils.strip(singeLine);
         int i = unsafeMoreAnalyzed(singeLine, queue);
+        check(queue);
         return queue;
     }
 
@@ -25,7 +28,7 @@ public class AssignExpressAnalyzer extends AbstractAnalyzer{
         char[] array = expression.toCharArray();
 
         while (i < array.length) {
-            if(Character.isWhitespace(i)) {
+            if(Character.isWhitespace(array[i])) {
                 i++;
                 continue;
             }
@@ -46,7 +49,6 @@ public class AssignExpressAnalyzer extends AbstractAnalyzer{
             char ch = array[i];
             if(!Character.isWhitespace(ch)) {
                 Token token = TokenHelp.queryToken(ch);
-                check(queue, token);
                 queue.add(new Symbol(token, ch));
             }
             i++;
@@ -54,15 +56,7 @@ public class AssignExpressAnalyzer extends AbstractAnalyzer{
         return i;
     }
 
-    private void check(SymbolQueue queue, Token token) {
-        if(queue.isEmpty()) {
-            return;
-        }
-        Symbol symbol = queue.peek();
-        if(illegalVariable(token,symbol.getToken(), queue.size())) {
-            throw new IllegalArgumentException("illegal variable name: " + symbol.getData());
-        }
-    }
+
 
     private boolean illegalVariable(Token token, Token preToken, int size) {
         return token == Token.equal && (size > 2 || preToken != Token.letter);

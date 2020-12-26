@@ -1,6 +1,7 @@
 package org.letokba.lexe;
 
-import static org.letokba.lexe.CheckerFactory.*;
+import org.letokba.lexe.help.Checker;
+
 /**
  * @author Wait
  * @date 2020/12/23
@@ -9,17 +10,17 @@ public enum Token {
     /**
      *
      */
-    equal(16, '=', equalChecker),
+    equal(16, '='),
 //    dot(8, '.'),
-    lBracket(4, '(', leftBracketChecker),
-    rBracket(4, ')', rightBracketChecker),
-    add(2, '+', operationChecker),
-    sub(2, '-', operationChecker),
-    mul(1, '*', operationChecker),
-    div(1, '/', operationChecker),
-    mod(1, '%', operationChecker),
-    num(0, '0', numberChecker),
-    letter(0, 'a', variableChecker);
+    lBracket(4, '('),
+    rBracket(4, ')'),
+    add(2, '+'),
+    sub(2, '-'),
+    mul(1, '*'),
+    div(1, '/'),
+    mod(1, '%'),
+    num(0, '0'),
+    letter(0, 'a');
 
     int priority;
 
@@ -27,7 +28,7 @@ public enum Token {
 
     Checker checker;
 
-    Token(int priority, char sign, Checker checker) {
+    Token(int priority, char sign) {
         this.priority = priority;
         this.sign = sign;
     }
@@ -37,9 +38,7 @@ public enum Token {
     }
 
 
-    public boolean allowAfter(Token token) {
-        return this.checker.checkAfter(token);
-    }
+
 
 
 }

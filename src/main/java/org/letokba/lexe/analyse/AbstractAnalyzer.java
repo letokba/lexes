@@ -2,6 +2,7 @@ package org.letokba.lexe.analyse;
 
 import org.letokba.lexe.Symbol;
 import org.letokba.lexe.SymbolQueue;
+import org.letokba.lexe.TokenHelp;
 
 import java.util.Iterator;
 
@@ -28,6 +29,40 @@ public abstract class AbstractAnalyzer implements Analyzer{
             }
         }
         return j;
+    }
+
+    public void check(SymbolQueue queue) {
+        if(queue.isEmpty()) {
+            return;
+        }
+        Iterator<Symbol> it = queue.iterator();
+        Symbol symbol = it.next();
+        boolean bracketState = false;
+        while (it.hasNext()) {
+            Symbol next = it.next();
+            boolean result = TokenHelp.getChecker(symbol).checkAfter(next.getToken());
+            if(! result) {
+                throw new IllegalArgumentException("illegal expression: " + next.getData() + " is not allow after " + symbol.getData());
+            }
+            bracketState = checkBracket(symbol, bracketState);
+            symbol = next;
+        }
+        bracketState = checkBracket(symbol, bracketState);
+    }
+
+    private boolean checkBracket(Symbol symbol, boolean state) {
+        if(symbol.isLeftBracket()) {
+            if(state){
+                throw new IllegalArgumentException("lack the ')'");
+            }
+            state = true;
+        }else if(symbol.isRightBracket()) {
+            if(!state) {
+                throw new IllegalArgumentException("')' is more");
+            }
+            state = false;
+        }
+        return state;
     }
 
 }

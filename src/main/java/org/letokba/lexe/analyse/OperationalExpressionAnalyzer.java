@@ -24,6 +24,7 @@ public class OperationalExpressionAnalyzer extends AbstractAnalyzer{
         if(i < expression.length()) {
             throw new RuntimeException("expression is error where index = " + i + ", " + expression);
         }
+        check(queue);
         return queue;
     }
 
