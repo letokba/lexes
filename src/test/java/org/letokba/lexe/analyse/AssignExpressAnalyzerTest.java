@@ -7,7 +7,7 @@ public class AssignExpressAnalyzerTest {
     Analyzer analyzer = new AssignExpressAnalyzer();
     @Test
     public void analyzed() {
-        String sample = "a";
+        String sample = "a + a = 3";
 
         SymbolQueue queue = analyzer.analyzed(sample);
         queue.forEach(System.out::println);

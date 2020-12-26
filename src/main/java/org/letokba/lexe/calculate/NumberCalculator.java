@@ -17,7 +17,7 @@ public class NumberCalculator implements Calculator<Double> {
         return transformValue(tree.getRoot().flag);
     }
 
-    private void postOrder(TreeNode p) {
+    protected void postOrder(TreeNode p) {
         if (p == null || (p.leftChild == null && p.rightChild == null)) {
             return;
         }
@@ -46,7 +46,7 @@ public class NumberCalculator implements Calculator<Double> {
 
     private Symbol action(TreeNode p) {
         Token token = p.flag.getToken();
-        if (p.flag.isOperation()) {
+        if (p.flag.isOperation() && ! p.flag.isEqual()) {
             updateValue(p.leftChild.flag);
             updateValue(p.rightChild.flag);
         }

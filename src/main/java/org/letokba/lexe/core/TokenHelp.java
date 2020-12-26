@@ -15,7 +15,7 @@ import static org.letokba.lexe.core.Token.*;
  */
 public class TokenHelp {
 
-    static EnumSet<Token> operationSet = EnumSet.of(add, sub, mul, div, mod);
+    static EnumSet<Token> operationSet = EnumSet.of(add, sub, mul, div, mod, equal);
     static EnumSet<Token> tokens = EnumSet.allOf(Token.class);
     static final SymbolHelpFactory FACTORY = new SymbolHelpFactory();
 

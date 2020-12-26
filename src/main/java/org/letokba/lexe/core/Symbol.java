@@ -45,9 +45,15 @@ public class Symbol {
         return token == Token.letter;
     }
 
+    public boolean isEqual() {
+        return token == Token.equal;
+    }
+
     public boolean lowTo(Symbol symbol) {
         return this.token.priority < symbol.token.priority;
     }
+
+
 
     @Override
     public String toString() {

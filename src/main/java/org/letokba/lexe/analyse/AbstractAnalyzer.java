@@ -40,6 +40,7 @@ public abstract class AbstractAnalyzer implements Analyzer{
         Iterator<Symbol> it = queue.iterator();
         Symbol symbol = it.next();
         checkHead(symbol);
+        checkEqual(queue);
         checkBracket(queue);
         while (it.hasNext()) {
             Symbol next = it.next();
@@ -51,6 +52,17 @@ public abstract class AbstractAnalyzer implements Analyzer{
         }
 
         checkTail(symbol);
+    }
+
+    private void checkEqual(SymbolQueue queue) {
+        int count = 0;
+        for(Symbol symbol : queue) {
+            if(symbol.isEqual() && count != 1){
+                throw new IllegalArgumentException("illegal expression: " + "'=' must be located second.");
+            }
+            count++;
+        }
+
     }
 
     private void checkBracket(SymbolQueue queue) {
@@ -84,7 +96,7 @@ public abstract class AbstractAnalyzer implements Analyzer{
         Token token = symbol.getToken();
         boolean result = token == Token.letter || token == Token.num || token == Token.rBracket;
         if(! result) {
-            throw new IllegalArgumentException("illegal expression: " + "not allow trailing at " + symbol.getData());
+            throw new IllegalArgumentException("illegal expression: " + "not allow trailing for " + symbol.getData());
         }
     }
 

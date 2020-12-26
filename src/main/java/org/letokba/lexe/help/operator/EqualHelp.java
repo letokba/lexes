@@ -4,6 +4,8 @@ import org.letokba.lexe.core.Symbol;
 import org.letokba.lexe.core.Token;
 import org.letokba.lexe.help.SymbolHelp;
 
+import java.util.Map;
+
 import static org.letokba.lexe.core.Token.*;
 
 /**
@@ -24,6 +26,6 @@ public class EqualHelp implements SymbolHelp {
 
     @Override
     public Symbol binary(Symbol pre, Symbol next) {
-        return null;
+        return new Symbol(equal, '=');
     }
 }

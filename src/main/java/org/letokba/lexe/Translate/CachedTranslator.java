@@ -1,9 +1,7 @@
 package org.letokba.lexe.Translate;
 
-import org.letokba.lexe.core.Symbol;
 import org.letokba.lexe.core.SymbolQueue;
 import org.letokba.lexe.core.SymbolTree;
-import org.letokba.lexe.core.Token;
 import org.letokba.lexe.analyse.Analyzer;
 
 import java.util.HashMap;
@@ -27,34 +25,16 @@ public class CachedTranslator extends Translator<Double>{
 
     @Override
     public Double translated(String expression) {
-        Double ans;
+        Double value;
         SymbolQueue queue = getAnalyzer().analyzed(expression);
         if(queue.size() == 1) {
             String name = (String) queue.peek().getData();
             return cache.get(name);
         }
-        ans = definedVariable(queue);
-        if(ans == null) {
-            SymbolTree symbolTree = SymbolTree.builder(queue);
-            ans = getCalculator().calculated(symbolTree);
-        }
-        return  ans;
+        SymbolTree symbolTree = SymbolTree.builder(queue);
+        value = getCalculator().calculated(symbolTree);
+        return value;
     }
 
-    private Double definedVariable(SymbolQueue queue) {
-        if(queue.size() >= 3) {
-            Symbol first = queue.get(0);
-            Symbol second = queue.get(1);
-            if(first.isVariable() && second.getToken() == Token.equal) {
-                queue.poll();
-                queue.poll();
-                SymbolTree symbolTree = SymbolTree.builder(queue);
-                Double data = getCalculator().calculated(symbolTree);
-                String variableName = (String) first.getData();
-                cache.put(variableName, data);
-                return data;
-            }
-        }
-        return null;
-    }
+
 }
