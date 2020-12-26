@@ -35,6 +35,14 @@ public class TranslatorTest {
     }
 
     @Test
+    public void defineVariable() {
+        double a = Translator.defineVariable("a = ( 1 + 2) * 3");
+        double b = Translator.defineVariable(" a ");
+        System.out.println("a = " + a + " , b = " + b);
+
+    }
+
+    @Test
     public void simpleTest() {
         String sample = "(1 + 2)";
         double ans = Translator.computeExpression(sample);
@@ -59,7 +67,7 @@ public class TranslatorTest {
 
         for(int i = 0; i < list.size(); i++) {
             String sample = list.get(i);
-            Double d = Translator.computeExpression(sample);
+            Double d = Translator.defineVariable(sample);
 
             System.out.format("%-20s = %5.2f %10s\n", sample, d, (d.equals(result.get(i))));
         }

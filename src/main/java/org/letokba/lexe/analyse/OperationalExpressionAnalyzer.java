@@ -44,7 +44,7 @@ public class OperationalExpressionAnalyzer extends AbstractAnalyzer{
                 i++;
             }else {
                 token = Token.num;
-                data = Double.parseDouble(expression.substring(i, j));
+                data = expression.substring(i, j);
                 i = j;
             }
             queue.add(new Symbol(token, data));

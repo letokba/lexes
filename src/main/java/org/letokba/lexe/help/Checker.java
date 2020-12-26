@@ -1,7 +1,6 @@
 package org.letokba.lexe.help;
 
 
-import org.letokba.lexe.Symbol;
 import org.letokba.lexe.Token;
 
 /**

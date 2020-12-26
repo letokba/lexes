@@ -29,8 +29,8 @@ public class NumberCalculator implements Calculator<Double> {
         if (p.flag.isOperation()) {
             double a, b;
             try{
-                a = (double) p.leftChild.flag.getData();
-                b = (double) p.rightChild.flag.getData();
+                a = castNumber(p.leftChild.flag);
+                b = castNumber(p.rightChild.flag);
             }catch (NullPointerException e) {
                 throw new IllegalArgumentException("expression error. please check!");
             }
@@ -44,4 +44,16 @@ public class NumberCalculator implements Calculator<Double> {
             p.flag = p.rightChild.flag;
         }
     }
+
+    private double castNumber(Symbol symbol) {
+        Object data = symbol.getData();
+        if(data instanceof Double) {
+            return (Double)data;
+        }
+        if(data instanceof String) {
+            return Double.parseDouble((String)data);
+        }
+        throw new IllegalArgumentException(data + " is not number");
+    }
+
 }

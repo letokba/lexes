@@ -35,4 +35,8 @@ public class SymbolQueue extends AbstractQueue<Symbol> {
     public Symbol peek() {
         return queue.peek();
     }
+
+    public Symbol get(int index) {
+        return queue.get(index);
+    }
 }

@@ -8,7 +8,7 @@ public class OperationalExpressionAnalyzerTest {
 
     @Test
     public void analyzed() {
-        String sample = "1 + 2_";
+        String sample = "((3.0 + 2) * 2) + 0 + (2 * 3)";
         SymbolQueue queue = analyzer.analyzed(sample);
         queue.forEach(System.out::println);
     }
