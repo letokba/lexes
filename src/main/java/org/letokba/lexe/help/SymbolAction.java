@@ -10,5 +10,5 @@ public interface SymbolAction {
 
     public  Symbol binary(Symbol pre, Symbol next);
 
-    public  Object unary(Symbol next);
+    public  Symbol unary(Symbol next);
 }

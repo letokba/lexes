@@ -14,7 +14,7 @@ public interface SymbolHelp extends Checker, SymbolAction{
     }
 
     @Override
-    default Object unary(Symbol next) {
+    default Symbol unary(Symbol next) {
         return null;
     }
 }

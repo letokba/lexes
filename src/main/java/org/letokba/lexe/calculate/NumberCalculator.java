@@ -21,25 +21,9 @@ public class NumberCalculator implements Calculator<Double> {
         if (p == null || (p.leftChild == null && p.rightChild == null)) {
             return;
         }
-
         postOrder(p.leftChild);
         postOrder(p.rightChild);
-
-        if (p.flag.isOperation()) {
-            double a, b;
-            try{
-                updateValue(p.leftChild.flag);
-                updateValue(p.rightChild.flag);
-            }catch (NullPointerException e) {
-                throw new IllegalArgumentException("expression error. please check!");
-            }
-
-            p.flag = action(p);
-        }
-
-        if (p.flag.isLeftBracket()) {
-            p.flag = p.rightChild.flag;
-        }
+        p.flag = action(p);
     }
 
     private void updateValue(Symbol symbol) {
@@ -50,19 +34,22 @@ public class NumberCalculator implements Calculator<Double> {
     @Override
     public Double transformValue(Symbol symbol) {
         Object data = symbol.getData();
-        if(data instanceof Double) {
+        if (data instanceof Double) {
             return (Double) data;
         }
-        if(data instanceof String) {
-            return Double.parseDouble((String)data);
+        if (data instanceof String) {
+            return Double.parseDouble((String) data);
         }
         throw new IllegalArgumentException(data + " is not number");
     }
 
 
-
     private Symbol action(TreeNode p) {
         Token token = p.flag.getToken();
+        if (p.flag.isOperation()) {
+            updateValue(p.leftChild.flag);
+            updateValue(p.rightChild.flag);
+        }
         return TokenHelp.getAction(token).binary(p.leftChild.flag, p.rightChild.flag);
     }
 

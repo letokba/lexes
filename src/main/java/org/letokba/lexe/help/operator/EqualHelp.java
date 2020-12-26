@@ -18,8 +18,8 @@ public class EqualHelp implements SymbolHelp {
     }
 
     @Override
-    public Object unary(Symbol next) {
-        return next.getData();
+    public Symbol unary(Symbol next) {
+        return next;
     }
 
     @Override
