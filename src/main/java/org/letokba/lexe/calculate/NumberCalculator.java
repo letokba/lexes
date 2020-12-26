@@ -28,14 +28,14 @@ public class NumberCalculator implements Calculator<Double> {
         if (p.flag.isOperation()) {
             double a, b;
             try{
-                a = transformValue(p.leftChild.flag);
-                b = transformValue(p.rightChild.flag);
+                updateValue(p.leftChild.flag);
+                updateValue(p.rightChild.flag);
             }catch (NullPointerException e) {
                 throw new IllegalArgumentException("expression error. please check!");
             }
 
-            Token operator = p.flag.getToken();
-            double ans = TokenHelp.operate(operator, a, b);
+            Object ans = action(p);
+
             p.flag = new Symbol(Token.num, ans);
         }
 
@@ -44,16 +44,28 @@ public class NumberCalculator implements Calculator<Double> {
         }
     }
 
+    private void updateValue(Symbol symbol) {
+        Double data = transformValue(symbol);
+        symbol.setData(data);
+    }
+
     @Override
     public Double transformValue(Symbol symbol) {
         Object data = symbol.getData();
         if(data instanceof Double) {
-            return (Double)data;
+            return (Double) data;
         }
         if(data instanceof String) {
             return Double.parseDouble((String)data);
         }
         throw new IllegalArgumentException(data + " is not number");
+    }
+
+
+
+    private Object action(TreeNode p) {
+        Token token = p.flag.getToken();
+        return TokenHelp.getAction(token).binary(p.leftChild.flag, p.rightChild.flag);
     }
 
 }

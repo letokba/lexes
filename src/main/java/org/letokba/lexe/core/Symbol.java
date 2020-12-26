@@ -6,10 +6,14 @@ package org.letokba.lexe.core;
  */
 public class Symbol {
     private final Token token;
-    private final Object data;
+    private Object data;
 
     public Symbol(Token token, Object data) {
         this.token = token;
+        this.data = data;
+    }
+
+    public void setData(Object data) {
         this.data = data;
     }
 

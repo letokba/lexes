@@ -1,5 +1,6 @@
 package org.letokba.lexe.help;
 
+import org.letokba.lexe.core.Symbol;
 import org.letokba.lexe.core.Token;
 
 import static org.letokba.lexe.core.Token.*;
@@ -13,6 +14,10 @@ public class EqualHelp implements SymbolHelp{
     @Override
     public boolean checkAfter(Token token) {
         return token == letter || token == num || token == lBracket;
+    }
 
+    @Override
+    public Object unary(Symbol next) {
+        return next.getData();
     }
 }

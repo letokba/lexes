@@ -2,6 +2,7 @@ package org.letokba.lexe.help;
 
 import org.letokba.lexe.core.Token;
 import org.letokba.lexe.core.TokenHelp;
+import org.letokba.lexe.help.operator.*;
 
 import static org.letokba.lexe.core.Token.*;
 import java.util.EnumMap;
@@ -12,8 +13,6 @@ import java.util.EnumMap;
  */
 public class SymbolHelpFactory {
     private final EnumMap<Token, SymbolHelp> checkerMap = new EnumMap<Token, SymbolHelp>(Token.class);
-    private  final SymbolHelp OPERATOR_CHECKER = new OperatorHelp();
-
 
     public SymbolHelpFactory() {
         init();
@@ -26,15 +25,17 @@ public class SymbolHelpFactory {
         checkerMap.put(letter, new VariableHelp());
         checkerMap.put(lBracket, new LeftBracketHelp());
         checkerMap.put(rBracket, new RightBracketHelp());
+        checkerMap.put(add, new AddHelp());
+        checkerMap.put(sub, new SubHelp());
+        checkerMap.put(mul, new MulHelp());
+        checkerMap.put(div, new DivHelp());
+        checkerMap.put(mod, new ModHelp());
 
     }
 
 
 
-     public Checker getChecker(Token token) {
-        if(TokenHelp.isOperationalToken(token)) {
-            return OPERATOR_CHECKER;
-        }
+     public SymbolHelp getHelp(Token token) {
         return checkerMap.get(token);
     }
 }

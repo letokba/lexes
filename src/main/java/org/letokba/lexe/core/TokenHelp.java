@@ -1,14 +1,11 @@
 package org.letokba.lexe.core;
 
-import org.letokba.lexe.core.Symbol;
-import org.letokba.lexe.core.Token;
 import org.letokba.lexe.help.Checker;
+import org.letokba.lexe.help.SymbolAction;
 import org.letokba.lexe.help.SymbolHelpFactory;
 
-import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.Optional;
-import java.util.function.DoubleBinaryOperator;
 
 import static org.letokba.lexe.core.Token.*;
 
@@ -20,16 +17,9 @@ public class TokenHelp {
 
     static EnumSet<Token> operationSet = EnumSet.of(add, sub, mul, div, mod);
     static EnumSet<Token> tokens = EnumSet.allOf(Token.class);
-    static EnumMap<Token, DoubleBinaryOperator> operatorEnumMap = new EnumMap<>(Token.class);
     static final SymbolHelpFactory FACTORY = new SymbolHelpFactory();
 
-    static {
-        operatorEnumMap.put(add, new Add());
-        operatorEnumMap.put(div, new Div());
-        operatorEnumMap.put(sub, new Sub());
-        operatorEnumMap.put(mul, new Mul());
-        operatorEnumMap.put(mod, new Mod());
-    }
+
 
     public static boolean isOperationalToken(Token token) {
         return operationSet.contains(token);
@@ -62,52 +52,11 @@ public class TokenHelp {
     }
 
     public static Checker getChecker(Token token) {
-        return FACTORY.getChecker(token);
+        return FACTORY.getHelp(token);
     }
 
-
-
-    static class Add implements DoubleBinaryOperator {
-        @Override
-        public double applyAsDouble(double left, double right) {
-            return left + right;
-        }
+    public static SymbolAction getAction(Token token) {
+        return FACTORY.getHelp(token);
     }
 
-    static class Sub implements DoubleBinaryOperator {
-        @Override
-        public double applyAsDouble(double left, double right) {
-            return left - right;
-        }
-    }
-
-
-    static class Mul implements DoubleBinaryOperator {
-        @Override
-        public double applyAsDouble(double left, double right) {
-            return left * right;
-        }
-    }
-
-    static class Div implements DoubleBinaryOperator {
-        @Override
-        public double applyAsDouble(double left, double right) {
-            return left / right;
-        }
-    }
-
-    static class Mod implements DoubleBinaryOperator {
-        @Override
-        public double applyAsDouble(double left, double right) {
-            return left % right;
-        }
-    }
-
-
-    public static double operate(Token operator, double a, double b) {
-        if (!operatorEnumMap.containsKey(operator)) {
-            throw new IllegalArgumentException(operator.sign + "not support bit-operator");
-        }
-        return operatorEnumMap.get(operator).applyAsDouble(a, b);
-    }
 }
