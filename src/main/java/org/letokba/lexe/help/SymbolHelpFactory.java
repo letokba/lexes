@@ -1,7 +1,6 @@
 package org.letokba.lexe.help;
 
 import org.letokba.lexe.core.Token;
-import org.letokba.lexe.core.TokenHelp;
 import org.letokba.lexe.help.operator.*;
 
 import static org.letokba.lexe.core.Token.*;
