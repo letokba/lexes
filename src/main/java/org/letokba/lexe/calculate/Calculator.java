@@ -1,5 +1,6 @@
 package org.letokba.lexe.calculate;
 
+import org.letokba.lexe.Symbol;
 import org.letokba.lexe.SymbolTree;
 
 /**
@@ -9,5 +10,7 @@ import org.letokba.lexe.SymbolTree;
 public  interface Calculator<T> {
 
 
-    abstract T calculated(SymbolTree tree);
+    T calculated(SymbolTree tree);
+
+    T transformValue(Symbol symbol);
 }

@@ -4,6 +4,7 @@ package org.letokba.lexe;
 import org.letokba.lexe.analyse.Analyzer;
 import org.letokba.lexe.analyse.AssignExpressAnalyzer;
 import org.letokba.lexe.analyse.OperationalExpressionAnalyzer;
+import org.letokba.lexe.calculate.AssignCalculator;
 import org.letokba.lexe.calculate.Calculator;
 import org.letokba.lexe.calculate.NumberCalculator;
 
@@ -16,7 +17,7 @@ import java.util.Map;
  */
 public class Translator {
     private static final Analyzer ANALYZER = new OperationalExpressionAnalyzer();
-    private static final Map<String, Object> cache = new HashMap<>();
+    private static final Map<String, Double> cache = new HashMap<>();
 
     public static double computeExpression(String expression) {
         SymbolQueue queue = ANALYZER.analyzed(expression);
@@ -25,18 +26,17 @@ public class Translator {
         return calculator.calculated(symbolTree);
     }
 
-
     public static double defineVariable(String expression) {
-        Calculator<Double> calculator = new NumberCalculator();
+        Calculator<Double> calculator = new AssignCalculator(cache);
         Analyzer analyzer = new AssignExpressAnalyzer();
         SymbolQueue queue = analyzer.analyzed(expression);
 
         if(queue.size() == 1) {
             String name = (String) queue.peek().getData();
-            return (double) cache.get(name);
+            return cache.get(name);
         }
 
-        if(queue.size() > 3) {
+        if(queue.size() >= 3) {
             Symbol first = queue.get(0);
             Symbol second = queue.get(1);
             if(first.isVariable() && second.getToken() == Token.equal) {

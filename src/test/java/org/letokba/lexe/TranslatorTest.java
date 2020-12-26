@@ -37,8 +37,9 @@ public class TranslatorTest {
     @Test
     public void defineVariable() {
         double a = Translator.defineVariable("a = ( 1 + 2) * 3");
-        double b = Translator.defineVariable(" a ");
-        System.out.println("a = " + a + " , b = " + b);
+        double b = Translator.defineVariable("b = a + 2");
+        double c = Translator.defineVariable("c = b");
+        System.out.println("a = " + a + " , b = " + b + " , c = " + c);
 
     }
 

@@ -15,7 +15,7 @@ public class NumberCalculator implements Calculator<Double> {
     @Override
     public Double calculated(SymbolTree tree) {
         postOrder(tree.getRoot());
-        return (Double) tree.getRoot().flag.getData();
+        return transformValue(tree.getRoot().flag);
     }
 
     private void postOrder(TreeNode p) {
@@ -29,8 +29,8 @@ public class NumberCalculator implements Calculator<Double> {
         if (p.flag.isOperation()) {
             double a, b;
             try{
-                a = castNumber(p.leftChild.flag);
-                b = castNumber(p.rightChild.flag);
+                a = transformValue(p.leftChild.flag);
+                b = transformValue(p.rightChild.flag);
             }catch (NullPointerException e) {
                 throw new IllegalArgumentException("expression error. please check!");
             }
@@ -45,7 +45,8 @@ public class NumberCalculator implements Calculator<Double> {
         }
     }
 
-    private double castNumber(Symbol symbol) {
+    @Override
+    public Double transformValue(Symbol symbol) {
         Object data = symbol.getData();
         if(data instanceof Double) {
             return (Double)data;

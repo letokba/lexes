@@ -1,5 +1,4 @@
 package org.letokba.lexe;
-import org.letokba.lexe.TreeNode;
 /**
  * @author Wait
  * @date 2020/12/23
@@ -42,7 +41,7 @@ public class SymbolTree {
                 root.setLeftChild(node);
                 continue;
             }
-            if (symbol.isLeftBracket() || symbol.isNum()) {
+            if (symbol.isLeftBracket() || symbol.isNum() || symbol.isVariable()) {
                 // we think the "(...)" is same with number
                 // only one, the "(" must be the root to transmit the next symbol like number or "("
                 // but number is mostly the rightChild unless not that it is the first by expression
