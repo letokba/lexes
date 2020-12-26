@@ -28,12 +28,16 @@ public class TranslatorTest {
     };
 
     static String[] cachedSamples = {
-            "a = 1 + 2",
-            "b = a + 2",
-            "a = (2.5 - 0.5) * 2",
-            "a",
-            "c = d + 2",
-            " e "
+            "(1 + 2) * 3",                      // 9
+            "(2 - 1) + (3 + 1)",                // 5
+            "(2.5 - 0.5) * 2",                  // 4
+            "((3.0 + 2) * 2) + 0 + (2 * 3)",    // 16
+            "3 + (2 + 3) * 3",                  // 18
+            "a = 2 + 3",                        // a = 5
+            "b = a * 2",                        // b = 10
+            "b = 10 - 2",                       // b = 8
+            "b",                                // b = 8
+            "c",                                // c is not defined
     };
 
     private Translator<Double> translator;
