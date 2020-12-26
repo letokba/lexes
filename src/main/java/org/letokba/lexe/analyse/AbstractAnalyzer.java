@@ -53,12 +53,12 @@ public abstract class AbstractAnalyzer implements Analyzer{
     private boolean checkBracket(Symbol symbol, boolean state) {
         if(symbol.isLeftBracket()) {
             if(state){
-                throw new IllegalArgumentException("lack the ')'");
+                throw new IllegalArgumentException("illegal expression: " + "lack the ')'");
             }
             state = true;
         }else if(symbol.isRightBracket()) {
             if(!state) {
-                throw new IllegalArgumentException("')' is more");
+                throw new IllegalArgumentException("illegal expression: " + "')' is more");
             }
             state = false;
         }

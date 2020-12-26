@@ -39,9 +39,6 @@ public class SymbolTree {
 
             if (symbol.isRightBracket()) {
                 root = root.parent;
-                if(root.leftChild != null) {
-                    throw new IllegalArgumentException("')' is more");
-                }
                 root.setLeftChild(node);
                 continue;
             }

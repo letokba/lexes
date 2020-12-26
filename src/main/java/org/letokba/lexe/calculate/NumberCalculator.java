@@ -41,9 +41,6 @@ public class NumberCalculator implements Calculator<Double> {
         }
 
         if (p.flag.isLeftBracket()) {
-            if(p.leftChild == null){
-                throw new IllegalArgumentException("lack the ')'");
-            }
             p.flag = p.rightChild.flag;
         }
     }
