@@ -14,7 +14,6 @@ public class Main {
 
     private static final String WELCOME = "Welcome to Lexes !\n";
 
-
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         System.out.println(WELCOME);

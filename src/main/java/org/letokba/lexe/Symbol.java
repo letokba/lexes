@@ -37,6 +37,10 @@ public class Symbol {
         return token == Token.rBracket;
     }
 
+    public boolean isVariable() {
+        return token == Token.letter;
+    }
+
     public boolean lowTo(Symbol symbol) {
         return this.token.priority < symbol.token.priority;
     }

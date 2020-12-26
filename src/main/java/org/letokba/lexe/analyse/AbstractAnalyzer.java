@@ -2,6 +2,7 @@ package org.letokba.lexe.analyse;
 
 import org.letokba.lexe.Symbol;
 import org.letokba.lexe.SymbolQueue;
+import org.letokba.lexe.Token;
 import org.letokba.lexe.TokenHelp;
 
 import java.util.Iterator;
@@ -37,6 +38,8 @@ public abstract class AbstractAnalyzer implements Analyzer{
         }
         Iterator<Symbol> it = queue.iterator();
         Symbol symbol = it.next();
+        checkHead(symbol);
+
         boolean bracketState = false;
         while (it.hasNext()) {
             Symbol next = it.next();
@@ -47,7 +50,8 @@ public abstract class AbstractAnalyzer implements Analyzer{
             bracketState = checkBracket(symbol, bracketState);
             symbol = next;
         }
-        bracketState = checkBracket(symbol, bracketState);
+        checkBracket(symbol, bracketState);
+        checkTail(symbol);
     }
 
     private boolean checkBracket(Symbol symbol, boolean state) {
@@ -63,6 +67,22 @@ public abstract class AbstractAnalyzer implements Analyzer{
             state = false;
         }
         return state;
+    }
+
+    private void checkHead(Symbol symbol) {
+        Token token = symbol.getToken();
+        boolean result = token == Token.letter || token == Token.num || token == Token.lBracket;
+        if(! result) {
+            throw new IllegalArgumentException("illegal expression: " + "not allow starting at " + symbol.getData());
+        }
+    }
+
+    private void checkTail(Symbol symbol) {
+        Token token = symbol.getToken();
+        boolean result = token == Token.letter || token == Token.num || token == Token.rBracket;
+        if(! result) {
+            throw new IllegalArgumentException("illegal expression: " + "not allow trailing at " + symbol.getData());
+        }
     }
 
 }
