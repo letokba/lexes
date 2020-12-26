@@ -1,6 +1,7 @@
 package org.letokba.lexe.help.operator;
 
 import org.letokba.lexe.core.Symbol;
+import org.letokba.lexe.core.Token;
 
 
 /**
@@ -12,9 +13,10 @@ public class DivHelp extends OperatorHelp {
 
 
     @Override
-    public Object binary(Symbol pre, Symbol next) {
+    public Symbol binary(Symbol pre, Symbol next) {
         double a = (double) pre.getData();
         double b = (double) next.getData();
-        return a / b;
+        return new Symbol(Token.num, a / b);
+
     }
 }

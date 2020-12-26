@@ -34,9 +34,7 @@ public class NumberCalculator implements Calculator<Double> {
                 throw new IllegalArgumentException("expression error. please check!");
             }
 
-            Object ans = action(p);
-
-            p.flag = new Symbol(Token.num, ans);
+            p.flag = action(p);
         }
 
         if (p.flag.isLeftBracket()) {
@@ -63,7 +61,7 @@ public class NumberCalculator implements Calculator<Double> {
 
 
 
-    private Object action(TreeNode p) {
+    private Symbol action(TreeNode p) {
         Token token = p.flag.getToken();
         return TokenHelp.getAction(token).binary(p.leftChild.flag, p.rightChild.flag);
     }

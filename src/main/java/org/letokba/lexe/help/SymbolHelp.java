@@ -9,7 +9,7 @@ import org.letokba.lexe.core.Symbol;
 public interface SymbolHelp extends Checker, SymbolAction{
 
     @Override
-    default Object binary(Symbol pre, Symbol next) {
+    default Symbol binary(Symbol pre, Symbol next) {
         return null;
     }
 

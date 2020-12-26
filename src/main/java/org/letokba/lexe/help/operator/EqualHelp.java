@@ -21,4 +21,9 @@ public class EqualHelp implements SymbolHelp {
     public Object unary(Symbol next) {
         return next.getData();
     }
+
+    @Override
+    public Symbol binary(Symbol pre, Symbol next) {
+        return null;
+    }
 }

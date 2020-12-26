@@ -8,7 +8,7 @@ import org.letokba.lexe.core.Symbol;
  */
 public interface SymbolAction {
 
-    public  Object binary(Symbol pre, Symbol next);
+    public  Symbol binary(Symbol pre, Symbol next);
 
     public  Object unary(Symbol next);
 }
