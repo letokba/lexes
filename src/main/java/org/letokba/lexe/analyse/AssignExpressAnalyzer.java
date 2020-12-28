@@ -58,14 +58,6 @@ public class AssignExpressAnalyzer extends AbstractAnalyzer{
         return i;
     }
 
-
-
-    private boolean illegalVariable(Token token, Token preToken, int size) {
-        return token == Token.equal && (size > 2 || preToken != Token.letter);
-    }
-
-
-
     private int tryMatchVariableName(char[] array, int i) {
         if(i >= array.length || !isLetterOrUnderLine(array[i])) {
             return i;

@@ -14,7 +14,7 @@ import org.letokba.lexe.calculate.NumberCalculator;
 public class TranslatorFactory {
 
     public Translator<Double> getTranslator() {
-        return getTranslator(false);
+        return getTranslator(true);
     }
 
     public Translator<Double> getTranslator(boolean cached) {
@@ -34,7 +34,7 @@ public class TranslatorFactory {
 
     private Translator<Double> createNumberTranslator() {
         Analyzer analyzer = new OperationalExpressionAnalyzer();
-        NumberTranslator translator = new NumberTranslator(analyzer);
+        CachedTranslator translator = new CachedTranslator(analyzer);
         Calculator<Double> calculator = new NumberCalculator();
         translator.setCalculator(calculator);
         return translator;

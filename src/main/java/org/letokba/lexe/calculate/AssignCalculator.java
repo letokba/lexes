@@ -4,6 +4,7 @@ import org.letokba.lexe.core.Symbol;
 import org.letokba.lexe.core.SymbolTree;
 import org.letokba.lexe.core.TreeNode;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
